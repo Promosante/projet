@@ -1,0 +1,191 @@
+<?php $__env->startSection('projet-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('GestionExpertise.action',$id))); ?>
+<h2>Gestion de l'expertise<span class="glyphicon glyphicon-briefcase pull-right"></span></h2>
+<?php if($success): ?>
+     <div class="alert alert-success">
+        <?php echo $success; ?>
+      </div>
+<?php endif; ?>
+<h3 style="margin-top:35px">Niveau d'expertise</h3>
+<hr>
+<h4  style="margin-top:20px">  <?php echo Form::checkbox('check_tout_le_projo', 'yes',true,['id'=>'check_tout_le_projo','class'=>'check_control']); ?> Ensemble du projet</h4>
+<h4  style="margin-top:20px"> <?php echo Form::checkbox('check_categories', 'yes',false,['id'=>'check_categories','class'=>'check_control']); ?> Par catégorie d'activité </h4>
+	
+	<h5 style="margin-left:40px"> Choisir une catégorie : <?php echo Form::select('sel_cat',$categories,0,['style'=>'max-width:100%;margin-top:15px;' ]); ?></h5>
+
+<h4  style="margin-top:20px"><?php echo Form::checkbox('check_activites', 'yes',false,['id'=>'check_activites','class'=>'check_control']); ?> Par activités</h4>
+
+
+<h5 style="margin-left:40px"> Choisir une ou plusieures activités : </h5>
+  
+   			<div class="hidden">
+               <?php echo $ligneName='ligne_participant';; ?>
+               <?php echo $ligneId='membre_participant_';; ?>
+               <?php echo $NbPerPage=15;; ?>
+               <?php echo $ligneClass='membre_participant_line';; ?>
+               <?php echo $checkNameAndId='check_activites_';; ?>
+               <?php echo $Nb_pages=ceil(count($les_activites)/$NbPerPage)+1;; ?>
+               <?php echo $Nb_El=count($les_activites);; ?>
+               <?php echo $pageId='page_participant_membres';; ?>
+             </div>
+              
+                      <div class="panel panel-info" style="margin-top:20px;margin-left:40px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Activités :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_part" onclick="javascript:refresh_result('tri_nom_part','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_obj" onclick="javascript:refresh_result('tri_obj','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Objectifs</p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($les_activites as $a): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      	<td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      	<td><?php echo $a->nom; ?></td>
+                                   		<td><?php echo $a->objectif; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+                      <hr>
+<h3 style="margin-top:35px">Période d'expertise</h3><hr>
+<h4  style="margin-top:20px">  <?php echo Form::checkbox('check_duree_projo', 'yes',true,['id'=>'check_duree_projo','class'=>'check_control2']); ?> Toute la durée du projet</h4>
+<h4  style="margin-top:20px">  <?php echo Form::checkbox('check_periode', 'yes',false,['id'=>'check_periode','class'=>'check_control2']); ?> La ou les périodes :</h4>
+  
+   			<div id="periodes">
+
+        </div>
+        <div class="btn btn-success" style="margin-top:20px" onclick="javascript:add_periode();">
+            Ajouter une periode 
+        </div>
+
+<hr>
+<h3 style="margin-top:35px">Notes</h3><hr>
+<h4  style="margin-top:20px"><?php echo Form::checkbox('check_quantite_real', 'yes',true,['id'=>'check_quantite_real','class'=>'check_control']); ?> Quantité de réalisation</h4>
+<h4  style="margin-top:20px"><?php echo Form::checkbox('check_qualite_real', 'yes',true,['id'=>'check_qualite_real','class'=>'check_control']); ?> Qualité de réalisation</h4>
+<h4  style="margin-top:20px"><?php echo Form::checkbox('check_quantite_part', 'yes',true,['id'=>'check_quantite_part','class'=>'check_control']); ?> Quantité de participation</h4>
+<h4  style="margin-top:20px"><?php echo Form::checkbox('check_qualite_part', 'yes',true,['id'=>'check_qualite_part','class'=>'check_control']); ?> Qualité de participation</h4>
+
+<hr>
+<h3 style="margin-top:35px">Solliciter des experts</h3><hr>
+			<div class="hidden">
+               <?php echo $ligneName='ligne_experts';; ?>
+               <?php echo $ligneId='ligne_experts_is';; ?>
+               <?php echo $NbPerPage=15;; ?>
+               <?php echo $ligneClass='_experts_line';; ?>
+               <?php echo $checkNameAndId='check_experts_';; ?>
+               <?php echo $Nb_pages=ceil(count($les_experts)/$NbPerPage)+1;; ?>
+               <?php echo $Nb_El=count($les_experts);; ?>
+               <?php echo $pageId='page_experts';; ?>
+             </div>
+              
+                      <div class="panel panel-info" style="margin-top:20px;margin-left:40px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Experts :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                    <tr>
+                                        <th></th> 
+                                        <th data-sort="string"><p class="btn btn-default trick" id="tri_nom" onclick="javascript:refresh_result('tri_nom','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                  		<th data-sort="string"><p class="btn btn-default trick" id="tri_prenom" onclick="javascript:refresh_result('tri_prenom','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Prenom</p></th>
+                                  		<th data-sort="string"><p class="btn btn-default trick" id="tri_structure" onclick="javascript:refresh_result('tri_structure','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Structure</p></th>
+                                  		<th data-sort="string"><p class="btn btn-default trick" id="tri_fonction" onclick="javascript:refresh_result('tri_fonction','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Fonction</p></th>
+                                  		<th data-sort="string"><p class="btn btn-default trick" id="tri_ville" onclick="javascript:refresh_result('tri_ville','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Ville</p></th>
+                                  	</tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($les_experts as $e): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      	<td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      	<td><?php echo $e->nom; ?></td>
+                                   		<td><?php echo $e->prenom; ?></td>
+                                   		<td><?php echo $e->structure; ?></td>
+                                   		<td><?php echo $e->fonction; ?></td>
+                                   		<td><?php echo $e->ville; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+<?php echo Form::submit('Terminer',['class'=>'btn btn-success','style'=>'margin-top:25px;width:100%','name'=>'terminer_exp']); ?>
+
+<hr>
+<?php if(count($expertises)>0): ?>
+<h4>Expertises définies :</h4>
+<?php endif; ?>
+<div class="hidden"><?php echo $i=0;; ?></div>
+<?php foreach($expertises as $e): ?>
+  <div class="alert alert-warning" style="margin-top:10px">
+    <h4>Expertise n° <?php echo $i+1; ?></h4>
+    <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger pull-right','style'=>'margin-top:15px','name'=>'supprimer_'.$i]); ?>
+     <?php if( $e->niveau_exp == 'tout_le_projet' ): ?>
+         <h4>Le niveau d'expertise : tout le projet</h4>
+      <?php endif; ?>
+    <?php if( $e->niveau_exp == 'categorie' ): ?>
+        <h4>Le niveau d'expertise : pour une catégorie d'activités.</h4>
+    <?php endif; ?>
+     <?php if( $e->niveau_exp == 'activite' ): ?>
+        <h4>Le niveau d'expertise : pour une ou plusieurs activités.</h4>
+    <?php endif; ?>
+    <?php if( $e->periode_exp == 'tout_projet' ): ?>
+        <h4>La période d'expertise : </h4>
+         <h5 style="margin-left:15px"> tout le projet </h5>
+    <?php endif; ?>
+     <?php if( $e->periode_exp == 'periodes' ): ?>
+        <h4>Périodes :</h4>
+        <?php foreach($periodes_associees[$i] as $p): ?>
+          <h5 style="margin-left:15px"><?php echo $p->nom; ?>, du <?php echo (new DateTime($p->date_debut))->format('d/m/Y'); ?> au <?php echo (new DateTime($p->date_fin))->format('d/m/Y'); ?>.</h5>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <h4>Notation :</h4>
+   <?php if( $e->quant_part == 'yes' ): ?>
+        <h5 style="margin-left:15px">la quantité de participation est notée.</h5>
+    <?php endif; ?>
+    <?php if( $e->qual_part == 'yes' ): ?>
+        <h5 style="margin-left:15px">la qualité de participation est notée.</h5>
+    <?php endif; ?>
+    <?php if( $e->quant_real == 'yes' ): ?>
+        <h5 style="margin-left:15px">la quantité de réalisation est notée.</h5>
+    <?php endif; ?>
+    <?php if( $e->qual_real == 'yes' ): ?>
+        <h5 style="margin-left:15px">la qualité de réalisation est notée.</h5>
+    <?php endif; ?>
+    <h4>Experts sollicités :</h4>
+    <?php foreach($experts_associes[$i] as $exp): ?>
+      <h5 style="margin-left:15px"><?php echo $exp->nom; ?> <?php echo $exp->prenom; ?>; structure : <?php echo $exp->structure; ?>;fonction : <?php echo $exp->fonction; ?>; ville <?php echo $exp->ville; ?> : </h5>
+    <?php endforeach; ?>
+</div>
+<div class="hidden"><?php echo $i=$i+1;; ?></div>
+<?php endforeach; ?>
+
+
+
+
+<?php echo Form::close(); ?>
+<?php echo HTML::script('js/gest_expertise.js');; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

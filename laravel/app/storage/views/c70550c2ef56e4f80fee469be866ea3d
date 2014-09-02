@@ -1,0 +1,40 @@
+<?php $__env->startSection('projet-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('indicateurs.action',$id))); ?>
+<div class="row">
+          <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Indicateurs</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"></div>
+                                  <div class="panel-body">
+                                    <div class="hidden"><?php echo $i=0;; ?></div>
+                                    <?php foreach($indics as $ind): ?>
+                                           <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger pull-right','style'=>'margin-top:25px','name'=>'supprime_$i']); ?>
+                                          <h4 style="text-align:justify;text-justify:inter-word;"><strong> <?php echo $ind->nom; ?> </strong> : </h4>
+                                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:20px"> Domaine : <?php echo $ind->domaine; ?>  </h4>
+                                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:20px"> Declinaison : <?php echo $ind->declinaison; ?>  </h4>
+                                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:20px"> Question : <?php echo $ind->question; ?> </h4>
+                                          <div class="hidden"><?php echo $j=0;; ?></div>
+
+                                          <?php foreach($reponses[$i] as $r): ?>
+                                                <div class="hidden"><?php echo $j++;; ?></div>
+                                               <h4> (reponse <?php echo $j; ?> type:<?php echo $r->type; ?>) <?php echo $r->contenu; ?></h4>
+                                          <?php endforeach; ?>
+                                          <div class="hidden"><?php echo $j=0;; ?></div>
+                                        <hr>
+                                    <div class="hidden"><?php echo $i++;; ?></div>
+                                    <?php endforeach; ?>
+                                  </div>
+                                </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+    
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

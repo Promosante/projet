@@ -1,0 +1,142 @@
+<?php $__env->startSection('projet-content'); ?>
+
+  <?php echo Form::open(array('url'=> URL::route('projectlieux.action',$id))); ?>
+    <h2>Gestion des activités<span class="glyphicon glyphicon-th pull-right"></span></h2>
+
+    <?php if($success): ?>
+                <div class="alert alert-success">
+                    <?php echo $success; ?>
+                </div>
+    <?php endif; ?>
+
+    <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+     <?php endif; ?>
+  <div class="row">
+            <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Activités</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="row">
+                            <div class="panel panel-info" style="margin-top:20px">
+                              <div class="panel-heading" style="font-size:20px"><strong>Nom_Activité_1</strong> </div>
+                                <div class="panel-body">
+                                  
+                                  <h4><strong> Objectif : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> 
+                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+                                  <h4><strong> Date de fin : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">01/01/2000</h4>
+                                  <h4><strong> Date de début : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">01/01/2000</h4>
+                                  <h4><strong> Indicateur : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">Indicateur</h4>
+                                  <h4><strong> Outil : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">1</h4>
+                                </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                            <div class="panel panel-info" style="margin-top:20px">
+                              <div class="panel-heading" style="font-size:20px"><strong>Nom_Activité_2</strong> </div>
+                                <div class="panel-body">
+                                  
+                                  <h4><strong> Objectif : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> 
+                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+                                  <h4><strong> Date de fin : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">01/01/2000</h4>
+                                  <h4><strong> Date de début : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">01/01/2000</h4>
+                                  <h4><strong> Indicateur : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">Indicateur</h4>
+                                  <h4><strong> Outil : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">1</h4>
+                                </div>
+                              </div>
+                    </div>
+                    <ul class="pagination pagination-sm pull-right">
+                        <li class="disabled"><a href="#" >&laquo;</a></li>
+                        <li class="active"><a href="#" >1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+     </div>
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Ajouter une activité : </h4>
+              <hr>
+           </div> 
+     </div>
+     
+     <div class="row"> 
+        <div class="col-md-5">
+            <?php echo Form::label('nom_ajout','Nom de la catégorie',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_ajout', 'Nom' ,['class'=>'form-control']); ?>
+            <?php echo Form::label('outil_ajout','Outil à utiliser',['class'=>'form-label','style'=>'margin-top:20px;']); ?>
+            <div class="btn-group"style="width:100%">
+                  <button type="button" class="btn btn-default">Outils disponibles</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+            <?php echo Form::label('outil_ajout','Indicateur disponibles',['class'=>'form-label','style'=>'margin-top:20px;']); ?>
+            <div class="btn-group"style="width:100%">
+                  <button type="button" class="btn btn-default">Outils disponibles</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+            <?php echo Form::label('date_deb_ajout','Date de début',['class'=>'form-label','style'=>'margin-top:20px;']); ?>
+            <?php echo Form::text('date_deb_ajout', '01/01/2000' ,['class'=>'form-control']); ?>
+            <?php echo Form::label('date_fin_ajout','Date de fin',['class'=>'form-label','style'=>'margin-top:20px;']); ?>
+            <?php echo Form::text('date_fin_ajout', '01/01/2000' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-6">
+            <?php echo Form::label('objectif_ajout','Objectif',['class'=>'form-label']); ?>
+            <?php echo Form::textarea('objectif_ajout', 'Objectif' ,['class'=>'form-control']); ?>
+            <?php echo Form::submit('Ajout',['class'=>'btn btn-success col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'ajout_lieu']); ?>
+        </div>
+        
+        
+        
+    </div>
+    <div class="row" style="margin-top:10px;">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Supprimer une activité </h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-5">
+            <?php echo Form::label('nom_supp','Nom (exact)',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_supp', 'Nom' ,['class'=>'form-control']); ?>
+        </div>
+        
+        <div class="col-md-2">
+            <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'supp_lieu']); ?>
+        </div>
+    </div>
+
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

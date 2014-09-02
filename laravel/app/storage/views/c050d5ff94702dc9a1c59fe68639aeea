@@ -1,0 +1,138 @@
+<?php $__env->startSection('projet-content'); ?>
+
+    <h2>Gestion des membres <span class="glyphicon glyphicon-user pull-right"></span></h2>
+
+    <div class="row">
+            <div class="panel panel-info" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Membres</strong> </div>
+                <div class="panel-body">
+                      <div class="table-responsive">  
+                          <table class="table table-hover table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th>Login</th>
+                                      <th>En qualité de</th>
+                                      <th>Date</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <?php define('i',0); ?>
+                                 <?php foreach($members as $m): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr>
+                                      <td><?php echo $i; ?></td>
+                                      <td><?php echo $m->user_login; ?></td>
+                                      <td><?php echo $m->user_status_for_project; ?></td>
+                                      <td><?php echo $m->created_at; ?></td>
+                                      </tr>
+                                  <?php endforeach; ?>
+  
+                              </tbody>
+                          </table>
+                        </div>   
+                </div>
+              </div>
+            </div>
+
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Ajouter un membre : </h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-3">
+            <?php echo Form::label('prenom','Login',['class'=>'form-label']); ?>
+            <?php echo Form::text('prenom', 'Login' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-3">
+            <?php echo Form::label('qualite','En qualité de',['class'=>'form-label']); ?>
+            <!-- Split button -->
+                <div class="btn-group"style="width:100%">
+                  <button type="button" class="btn btn-default">Catégorie</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+        </div>
+        <div class="col-md-2">
+
+            <button class="btn btn-success col-sm-2 col-xs-12" style="width:100%;margin-top:25px"> <span class="glyphicon glyphicon-plus"></span></button>
+        </div>
+    </div>
+
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Modifier la catégorie d'un membre : </h4>
+              <hr>
+           </div> 
+     </div>
+     
+     <div class="row"> 
+        <div class="col-md-3">
+            <?php echo Form::label('prenom','Login',['class'=>'form-label']); ?>
+            <?php echo Form::text('prenom', 'Login' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-3">
+            <?php echo Form::label('qualite','En qualité de',['class'=>'form-label']); ?>
+            <!-- Split button -->
+                <div class="btn-group"style="width:100%">
+                  <button type="button" class="btn btn-default">Qualité</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary col-sm-2 col-xs-12" style="width:100%;margin-top:25px"> <span class="glyphicon glyphicon-ok"></span></button>
+        </div>
+    </div>
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Supprimer un membre : </h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-3">
+            <?php echo Form::label('prenom','Login',['class'=>'form-label']); ?>
+            <?php echo Form::text('prenom', 'Login' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-danger col-sm-2 col-xs-12" style="width:100%;margin-top:25px"> <span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </div>
+
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Télécharger données CSV</h4>
+              <hr>
+           </div> 
+     </div>
+     <div class="row"> 
+        <div class="col-md-2">
+            <button class="btn btn-info col-sm-2 col-xs-12" style="width:100%;"> <span class="glyphicon glyphicon-download-alt"></span></button>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

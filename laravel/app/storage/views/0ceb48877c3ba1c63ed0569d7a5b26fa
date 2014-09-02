@@ -1,0 +1,477 @@
+<?php $__env->startSection('projet-content'); ?>
+
+  <?php echo Form::open(array('url'=> URL::route('activite.action',$id))); ?>
+
+    <h2>Gestion des activités<span class="glyphicon glyphicon-th pull-right"></span></h2>
+    <div class="row">
+         <?php echo Form::submit('Consulter mes activités',['class'=>'btn btn-primary btn-lg col-md-6 col-sm-6 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'consulter']); ?>
+    </div> 
+    <div class="row">
+         <?php if(Session::has('errors')): ?>
+                    <br>
+                    <div class="alert alert-danger">
+                        <?php foreach($errors as $message): ?>
+                            <p><?php echo $message; ?></p>
+                        <?php endforeach; ?>
+                        
+                    </div>
+        <?php endif; ?>
+        <?php if($success): ?>
+                    <br>
+                    <div class="alert alert-success">
+                        <?php foreach($success as $message): ?>
+                            <p><?php echo $message; ?></p>
+                        <?php endforeach; ?>
+                        
+                    </div>
+        <?php endif; ?> 
+     </div>
+     
+     
+<div class="row" id="basics_activites"> 
+  <hr>  
+  <div class="row" style="margin-top:15px">
+          <div class="col-md-6"> 
+              <h4 style="margin-top:35px">Ajouter une activité : </h4>
+              <hr>
+           </div> 
+     </div>
+        <div class="col-md-5">
+            <?php echo Form::label('objectif_ajout','Objectif',['class'=>'form-label']); ?>
+            <?php echo Form::textarea('objectif_ajout', '' ,['class'=>'form-control']); ?>
+           
+        </div>
+        <div class="col-md-6">
+            <?php echo Form::label('nom_ajout','Nom',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_ajout', '' ,['class'=>'form-control']); ?>
+            <?php echo Form::label('date_deb_ajout','Date de début',['class'=>'form-label','style'=>'margin-top:20px;']); ?>
+            <?php echo Form::text('date_deb_ajout', '' ,['class'=>'form-control']); ?>
+            <?php echo Form::label('date_fin_ajout','Date de fin',['class'=>'form-label','style'=>'margin-top:20px;']); ?>
+            <?php echo Form::text('date_fin_ajout', '' ,['class'=>'form-control']); ?>
+            <?php echo Form::submit("Ajouter",['class'=>'btn btn-success col-md-6 col-sm-6 col-xs-12 pull-right','style'=>'margin-top:25px;width:100%','name'=>'ajout_act']); ?>
+        </div>
+</div>
+<div class="col-md-12"id="association_activites" style="margin-top:20px">
+  <hr>
+      <?php if($act_en_cour): ?>
+        <div class="alert alert-warning">
+            <div class="row">
+              <div class="col-md-4">
+                <h4><strong>Nom</strong></h4>
+                <h5><?php echo $act_en_cour[0]->nom; ?></h5>
+              </div>
+               <div class="col-md-4">
+                <h4><strong>Date début</strong></h4>
+                 <h5><?php echo (new DateTime($act_en_cour[0]->date_debut))->format('d/m/Y'); ?></h5>
+              </div>
+               <div class="col-md-4">
+                <h4><strong>Date fin</strong></h4>
+                 <h5><?php echo (new DateTime($act_en_cour[0]->date_fin))->format('d/m/Y'); ?></h5>
+              </div>
+            </div>
+        </div>
+        <hr>
+        <?php endif; ?>
+        <h4>Attribuer des catégories d'activités <div id="hide_cat_p_act" class="btn btn-danger" style="margin-left:15px"><span id="logo_cat_p_act" class="glyphicon glyphicon-eye-close"></span></div></h4>
+            <br>
+            
+           <div class="row" id="content_cat_p_act"> 
+                  <div class="row">
+                    
+                    
+                    <div class="col-md-4">
+                          <a class="btn btn-primary col-sm-2 col-xs-12" 
+                              onclick="javascript:show_hidden_cat()"
+                                style="width:100%;margin-top:25px">
+                                Ajouter une catégorie
+                        </a>   
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo Form::submit('Retirer catégorie(s)',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'retirer_cat']); ?>   
+                    </div>
+                  </div>
+               <div class="hidden">
+                 <?php echo $ligneName='ligne_cats_shad';; ?>
+                 <?php echo $ligneId='cat_shad_';; ?>
+                 <?php echo $NbPerPage=5;; ?>
+                 <?php echo $ligneClass='cat_shad_line';; ?>
+                 <?php echo $checkNameAndId='check_cats_act';; ?>
+                 <?php echo $Nb_pages=ceil(count($cat)/$NbPerPage)+1;; ?>
+                 <?php echo $Nb_El=count($cat);; ?>
+                 <?php echo $pageId='page_shad_cats';; ?>
+               </div>
+                  <div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Catégories :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_c" onclick="javascript:refresh_result('tri_nom_c','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_descr_c" onclick="javascript:refresh_result('tri_descr_c','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Description</p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($cat as $c): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      <td><?php echo $c->nom; ?></td>
+                                      <td><?php echo $c->descriptif; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+                </div>
+              </div>
+
+
+          <h4>Attribuer des lieux <div id="hide_lieux_p_act" class="btn btn-danger" style="margin-left:15px"><span id="logo_lieux_p_act" class="glyphicon glyphicon-eye-close"></span></div></h4>
+            <br>
+            
+           <div class="row" id="content_lieux_p_act"> 
+                  <div class="row">
+                    
+                    <div class="col-md-4">
+                      <a class="btn btn-success col-sm-2 col-xs-12" 
+                            onclick="javascript:show_hidden_lieu();"
+                              style="width:100%;margin-top:25px">
+                              Ajouter un nouveau lieu
+                      </a>
+                      
+                    </div>
+                    <div class="col-md-4">
+                          <a class="btn btn-primary col-sm-2 col-xs-12" 
+                              onclick="javascript:show_hidden_lieu_enr();"
+                                style="width:100%;margin-top:25px">
+                                Ajouter un lieu enregistré
+                        </a>   
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo Form::submit('Retirer lieu(x)',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'retirer_lieu']); ?>   
+                    </div>
+                  </div>
+                <div class="hidden">
+                 <?php echo $ligneName='ligne_lieux_shad';; ?>
+                 <?php echo $ligneId='lieu_shad_';; ?>
+                 <?php echo $NbPerPage=5;; ?>
+                 <?php echo $ligneClass='lieu_shad_line';; ?>
+                 <?php echo $checkNameAndId='check_lieux_act';; ?>
+                 <?php echo $Nb_pages=ceil(count($lieux)/$NbPerPage)+1;; ?>
+                 <?php echo $Nb_El=count($lieux);; ?>
+                 <?php echo $pageId='page_shad_lieux';; ?>
+               </div>
+                  <div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Lieux :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_l" onclick="javascript:refresh_result('tri_nom_l','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_adresse_l" onclick="javascript:refresh_result('tri_adresse_l','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Adresse</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_ville_l" onclick="javascript:refresh_result('tri_ville_l','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Ville</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_code_postal_l" onclick="javascript:refresh_result('tri_code_postal_l','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Code Postal</p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($lieux as $l): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      <td><?php echo $l->nom; ?></td>
+                                      <td><?php echo $l->adresse; ?></td>
+                                      <td><?php echo $l->ville; ?></td>
+                                      <td><?php echo $l->code_postal; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                <?php $i=0; ?>
+                                 <?php foreach($lieux_cat as $l): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" class="warning">
+                                      <td><?php echo $i; ?></td>
+                                      <td><?php echo $l->nom; ?></td>
+                                      <td><?php echo $l->adresse; ?></td>
+                                      <td><?php echo $l->ville; ?></td>
+                                      <td><?php echo $l->code_postal; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+                </div>
+              </div>
+
+
+
+          <h4>Attribuer des membres <div id="hide_membres_p_act" class="btn btn-danger" style="margin-left:15px"><span id="logo_membres_p_act" class="glyphicon glyphicon-eye-close"></span></div></h4>
+            <br>
+            
+           <div class="row" id="content_membres_p_act"> 
+                  <div class="row">
+                    
+                    <div class="col-md-4">
+                      <a class="btn btn-success col-sm-2 col-xs-12" 
+                            onclick="javascript:show_hidden_membres();"
+                              style="width:100%;margin-top:25px">
+                              Ajouter un nouveau membre
+                      </a>
+                      
+                    </div>
+                    <div class="col-md-4">
+                          <a class="btn btn-primary col-sm-2 col-xs-12" 
+                              onclick="javascript:show_hidden_membres_enr();"
+                                style="width:100%;margin-top:25px">
+                                Ajouter un membre enregistré
+                        </a>   
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo Form::submit('Retirer membre(s)',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'retirer_membre']); ?>   
+                    </div>
+                  </div>
+                <div class="hidden">
+                 <?php echo $ligneName='ligne_membres_shad';; ?>
+                 <?php echo $ligneId='membre_shad_';; ?>
+                 <?php echo $NbPerPage=5;; ?>
+                 <?php echo $ligneClass='membre_shad_line';; ?>
+                 <?php echo $checkNameAndId='check_membres_act';; ?>
+                 <?php echo $Nb_pages=ceil(count($membres)/$NbPerPage)+1;; ?>
+                 <?php echo $Nb_El=count($membres);; ?>
+                 <?php echo $pageId='page_shad_membres';; ?>
+               </div>
+                  <div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Lieux :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_m" onclick="javascript:refresh_result('tri_nom_m','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_prenom_m" onclick="javascript:refresh_result('tri_prenom_m','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Prenom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_status_m" onclick="javascript:refresh_result('tri_status_m','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Status</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_date_m" onclick="javascript:refresh_result('tri_date_m','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Date</p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($membres as $m): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      <td><?php echo $m->nom; ?></td>
+                                      <td><?php echo $m->prenom; ?></td>
+                                      <td><?php echo $m->status; ?></td>
+                                      <td><?php echo $m->date; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                <?php $i=0; ?>
+                                 <?php foreach($membres_cat as $mc): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" class="warning">
+                                      <td><?php echo $i; ?></td>
+                                      <td><?php echo $mc->nom; ?></td>
+                                      <td><?php echo $mc->prenom; ?></td>
+                                      <td><?php echo $mc->status; ?></td>
+                                      <td><?php echo $mc->date; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+                </div>
+              </div>
+
+          <h4>Attribuer des indicateurs <div id="hide_indic_p_act" class="btn btn-danger" style="margin-left:15px"><span id="logo_indic_p_act" class="glyphicon glyphicon-eye-close"></span></div></h4>
+            <br>
+            
+           <div class="row" id="content_indic_p_act"> 
+                  <div class="row">
+                    <div class="col-md-4">
+                          <a class="btn btn-primary col-sm-2 col-xs-12" 
+                              onclick="javascript:show_hidden_indics();"
+                                style="width:100%;margin-top:25px">
+                                Ajouter un indicateur
+                        </a>   
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo Form::submit('Retirer indicateur(s)',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'retirer_indic']); ?>   
+                    </div>
+                  </div>
+               <div class="hidden">
+                 <?php echo $ligneName='ligne_indics_shad';; ?>
+                 <?php echo $ligneId='indic_shad_';; ?>
+                 <?php echo $NbPerPage=5;; ?>
+                 <?php echo $ligneClass='indic_shad_line';; ?>
+                 <?php echo $checkNameAndId='check_indics_act';; ?>
+                 <?php echo $Nb_pages=ceil(count($indics)/$NbPerPage)+1;; ?>
+                 <?php echo $Nb_El=count($indics);; ?>
+                 <?php echo $pageId='page_shad_indics';; ?>
+               </div>
+                  <div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Indicateurs :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_a" onclick="javascript:refresh_result('tri_nom_a','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_decli_a" onclick="javascript:refresh_result('tri_decli_a','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Déclinaison</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_dom_a" onclick="javascript:refresh_result('tri_dom_a','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Domaine</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_dest_a" onclick="javascript:refresh_result('tri_dest_a','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Destinataire</p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($indics as $c): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      <td><?php echo $c->nom; ?></td>
+                                      <td><?php echo $c->declinaison; ?></td>
+                                      <td><?php echo $c->domaine; ?></td>
+                                      <td><?php echo $c->destinataire; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+                </div>
+              </div>
+          <hr>
+          <div class="row">
+            <div class="alert alert-info">
+                  Les périodes sont comprises dans la limite des dates de l'activité.
+              </div>
+              <div class="hidden"><?php echo $i=0;; ?></div>
+              <div id="periodes">
+                  <?php foreach($periodes as $p): ?>
+                   <div class="hidden"><?php echo $i++;; ?></div>
+
+                       <div class="alert alert-warning">
+                          <div class="row">
+                            <div class="col-md-2">
+                                <label class="form-label">
+                                   Période 
+                                </label>
+                             <h4><?php echo $i; ?></h4>
+                            </div>
+                              <div class="col-md-4">
+                                <label class="form-label" for="nom_ajout">
+                                    Nom
+                                </label>
+                                <h4><?php echo $p->nom; ?></h4>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="date_deb_ajout">
+                                    Date de début
+                                </label>
+                                <h4><?php echo (new DateTime($p->date_debut))->format('d/m/Y'); ?></h4>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label" for="date_fin_ajout">
+                                    Date de fin
+                                </label>
+                                <h4><?php echo (new DateTime($p->date_fin))->format('d/m/Y'); ?></h4>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="btn btn-danger pull-right" type="submit" value="Retirer" name="retirer_p_<?php echo $i; ?>"></input>
+                            </div>
+                        </div>
+                      </div>
+
+                <?php endforeach; ?>
+              </div>
+              <div class="btn btn-success" style="margin-top:20px" onclick="javascript:add_periode();">
+                  Ajouter une periode 
+              </div>
+          </div>
+
+          <hr>
+        <div class="row">
+              <?php echo Form::submit("Enregistrer",['class'=>'btn btn-success col-md-6 col-sm-6 col-xs-12 pull-right','style'=>'margin-top:25px','name'=>'refresh_act']); ?>
+         </div>
+         <div class="row">
+              <?php echo Form::submit("Terminer",['class'=>'btn btn-success col-md-6 col-sm-6 col-xs-12 pull-right','style'=>'margin-top:25px','name'=>'terminer_act']); ?>
+         </div>
+
+</div>
+
+
+    <div class="row" style="margin-top:10px;">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Supprimer une activité </h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-5">
+            <?php echo Form::label('nom_supp','Nom (exact)',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_supp', '' ,['class'=>'form-control']); ?>
+        </div>
+        
+        <div class="col-md-2">
+            <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'supp_act']); ?>
+        </div>
+    </div>
+<?php echo Form::close(); ?>
+<?php echo HTML::script('js/gest_act.js');; ?>
+
+<?php echo $__env->make('pages.projet.Shadow_lieuxA', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('pages.projet.Shadow_lieux_enregistres_a', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('pages.projet.Shadow_categories', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('pages.projet.Shadow_new_membresA', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('pages.projet.Shadow_membresA', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('pages.projet.Shadow_indicateurs_act', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<script>
+hide_hidden_lieu();
+hide_hidden_lieu_enr();
+hide_hidden_cat();
+hide_hidden_membres();
+hide_hidden_membres_enr();
+hide_hidden_indics();
+pagine_results('page_cat','ligne_cat',1,<?php echo ceil(count($cat)/5); ?>,<?php echo count($cat); ?>,5);
+pagine_results('page_lieu','ligne_lieu',1,<?php echo ceil(count($lieux)/5); ?>,<?php echo count($lieux); ?>,5);
+<?php echo $script; ?>
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

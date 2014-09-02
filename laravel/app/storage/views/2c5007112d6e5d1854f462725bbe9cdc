@@ -1,0 +1,167 @@
+<?php $__env->startSection('projet-content'); ?>
+
+  <?php echo Form::open(array('url'=> URL::route('indicateurs.action',$id))); ?>
+    <h2>Gestion des indicateurs<span class="glyphicon glyphicon-asterisk pull-right"></span></h2>
+
+    <?php if($success): ?>
+                <div class="alert alert-success">
+                    <?php echo $success; ?>
+                </div>
+    <?php endif; ?>
+
+    <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+     <?php endif; ?>
+     
+    <div class="row">
+         <?php echo Form::submit('Consulter mes indicateurs',['class'=>'btn btn-primary btn-lg col-md-6 col-sm-6 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'consulter']); ?>
+    </div>
+ <div id="new_indic_container">
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Ajouter un indicateur : </h4>
+              <hr>
+           </div> 
+     </div>
+      
+     <div class="row"> 
+        <div class="col-md-6">
+      
+            <?php echo Form::label('description_ajout','Description',['class'=>'form-label']); ?>
+            <?php echo Form::textarea('description_ajout', 'Description' ,['class'=>'form-control']); ?>
+
+        </div>
+        <div class="col-md-5">
+            <?php echo Form::label('nom_ajout','Nom de l\'indicateur',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_ajout', 'Nom' ,['class'=>'form-control']); ?>
+           
+            
+            <?php echo Form::submit('Ajout',['class'=>'btn btn-success col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'ajout_indic']); ?>
+        </div>
+
+    </div>
+  </div>
+
+  <div id="outils_container">
+    <hr>
+    <div class="row">
+      <div class="row" style="margin-top:20px"> 
+              <?php echo Form::label('domaine_ajout','Domaine',['class'=>'form-label','style'=>'margin-top:15px']); ?>
+            </div>
+ 
+            <div class="row"> 
+                <div class="col-md-6">
+                    <h5>Participation</h5>
+                    <?php echo Form::checkbox('participation_ajout', 'yes'); ?>
+                 </div>
+                <div class="col-md-6">
+                  <h5>Réalisation</h5>
+                  <?php echo Form::checkbox('realisation_ajout', 'yes'); ?>
+                </div>
+            </div>
+
+             <div class="row"> 
+              <?php echo Form::label('domaine_ajout','Déclinaison',['class'=>'form-label','style'=>'margin-top:15px']); ?>
+            </div>
+
+            <div class="row"> 
+                <div class="col-md-6">
+                    <h5>Quantité</h5>
+                    <?php echo Form::checkbox('quantité_ajout', 'yes'); ?>
+                 </div>
+                <div class="col-md-6">
+                  <h5>Qualité</h5>
+                  <?php echo Form::checkbox('qualité_ajout', 'yes'); ?>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                  <h4 style="margin-top:35px">Associer des outils  <div id="hide_outils_p_indic" class="btn btn-danger" style="margin-left:15px"><span id="logo_outils_p_indic" class="glyphicon glyphicon-eye-close"></span></div></h4> 
+              </div>
+              
+            </div>
+            <div class="row" id="content_outils_p_indic"> 
+                  <div class="row">
+                    <div class="col-md-4">
+
+                          <a class="btn btn-info col-sm-2 col-xs-12" 
+                              onclick="javascript:toggle_slide();"
+                                style="width:100%;margin-top:25px">
+                                Ajouter un outils
+                        </a>   
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo Form::submit('Retirer outil(s)',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'retirer_outils']); ?>   
+                    </div>
+                  </div>
+                  <div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Outils attribués :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom" onclick="javascript:refresh_result('tri_nom','page_','ligne',<?php echo ceil(count($outils)/5)+1; ?>,<?php echo count($outils); ?>,5);" style="width:100%;">Nom</span></p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php define('i',0); ?>
+                                 <?php foreach($outils as $o): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="outils_<?php echo $i; ?>" name="ligne" onclick="javascript:hilight_line(<?php echo $i; ?>,'outils_','check_outils_','success outils_line','outils_line')" class="outils_line">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox('check_outils_'.$i, 'yes',false,['id'=>'check_outils_'.$i]); ?></td>
+                                      <td><?php echo $o->nom; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p <ceil(count($outils)/5)+1;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('page_','ligne',<?php echo $p; ?>,<?php echo ceil(count($outils)/5)+1; ?>,<?php echo count($outils); ?>,5);" id="page_<?php echo $p; ?>"><?php echo $p; ?></p>
+                          <?php endfor; ?>
+
+                          </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Supprimer un indicateur</h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-5">
+            <?php echo Form::label('nom_supp','Nom de la catégorie (exact)',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_supp', 'Nom' ,['class'=>'form-control']); ?>
+        </div>
+        
+        <div class="col-md-2">
+            <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'supp_lieu']); ?>
+        </div>
+    </div>
+
+<div id="hidden_outils_stuff">
+    <div class="btn btn-success btn-lg" onclick="ok_unlight_this();">Un-shade this ! </div>
+</div>
+
+<?php echo Form::close(); ?>
+<?php echo HTML::script('js/gest_indic.js');; ?>
+<script>
+<?php echo $script; ?>;
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

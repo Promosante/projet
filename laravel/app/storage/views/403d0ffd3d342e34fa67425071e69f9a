@@ -1,0 +1,121 @@
+<?php $__env->startSection('projet-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('notation.action',$id))); ?>
+
+<h2>Notation<span class="glyphicon glyphicon-briefcase pull-right"></span></h2>
+
+<?php if($success): ?>
+     <div class="alert alert-success">
+        <?php echo $success; ?>
+      </div>
+<?php endif; ?>
+
+<?php for($i=0;$i < count($expertises); $i++): ?>
+<div class="panel panel-info" style="margin-top:20px;margin-left:40px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Expertise <?php echo $i+1; ?></strong> </div>
+                          <div class="panel-body">
+    <?php if( $expertises[$i]->niveau_exp == 'tout_le_projet' ): ?>
+         <h4>Le niveau d'expertise : tout le projet</h4>
+      <?php endif; ?>
+    <?php if( $expertises[$i]->niveau_exp == 'categorie' ): ?>
+        <h4>Le niveau d'expertise : pour une catégorie d'activités.</h4>
+    <?php endif; ?>
+     <?php if( $expertises[$i]->niveau_exp == 'activite' ): ?>
+        <h4>Le niveau d'expertise : pour une ou plusieurs activités.</h4>
+    <?php endif; ?>
+    <?php if( $expertises[$i]->periode_exp == 'tout_projet' ): ?>
+        <h4>La période d'expertise : </h4>
+         <h5 style="margin-left:15px"> tout le projet </h5>
+    <?php endif; ?>
+     <?php if( $expertises[$i]->periode_exp == 'periodes' ): ?>
+        <h4>Périodes :</h4>
+        <?php foreach($periodes_associees[$i] as $p): ?>
+          <h5 style="margin-left:15px"><?php echo $p->nom; ?>, du <?php echo (new DateTime($p->date_debut))->format('d/m/Y'); ?> au <?php echo (new DateTime($p->date_fin))->format('d/m/Y'); ?>.</h5>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <h4>Notation :</h4>
+   <?php if( $expertises[$i]->quant_part == 'yes' ): ?>
+        <h5 style="margin-left:15px">la quantité de participation est notée.</h5>
+    <?php endif; ?>
+    <?php if( $expertises[$i]->qual_part == 'yes' ): ?>
+        <h5 style="margin-left:15px">la qualité de participation est notée.</h5>
+    <?php endif; ?>
+    <?php if( $expertises[$i]->quant_real == 'yes' ): ?>
+        <h5 style="margin-left:15px">la quantité de réalisation est notée.</h5>
+    <?php endif; ?>
+    <?php if( $expertises[$i]->qual_real == 'yes' ): ?>
+        <h5 style="margin-left:15px">la qualité de réalisation est notée.</h5>
+    <?php endif; ?>
+    <h4>Experts sollicités :</h4>
+    <?php foreach($experts_associes[$i] as $exp): ?>
+      <h5 style="margin-left:15px"><?php echo $exp->nom; ?> <?php echo $exp->prenom; ?>; structure : <?php echo $exp->structure; ?>;fonction : <?php echo $exp->fonction; ?>; ville <?php echo $exp->ville; ?> : </h5>
+    <?php endforeach; ?>
+    <hr>
+    <h4>Résultats :</h4>
+    <hr>
+    <h4>Quantité de réalisation</h4>
+      <h5>Notes :</h5>
+        <?php for($j=0;$j < count($notes_par_exp[$i]['qt_r']);$j++ ): ?>
+          <?php echo $notes_par_exp[$i]['qt_r'][$j]; ?> ##
+        <?php endfor; ?>
+        
+      <h5>Moyenne des notes :</h5>
+        
+      <?php if($moyennes[$i]['qt_r']>0): ?>
+        <?php echo $moyennes[$i]['qt_r']; ?>
+      <?php else: ?>
+        Pas de données chiffrées !
+      <?php endif; ?>
+
+
+    <hr>
+    <h4>Qualité de réalisation</h4>
+      <h5>Notes :</h5>
+      <?php for($j=0;$j < count($notes_par_exp[$i]['ql_r']);$j++ ): ?>
+            <?php echo $notes_par_exp[$i]['ql_r'][$j]; ?> ##
+        <?php endfor; ?>
+      <h5>Moyenne des notes :</h5>
+     
+      <?php if($moyennes[$i]['ql_r']>0): ?>
+        <?php echo $moyennes[$i]['ql_r']; ?>
+      <?php else: ?>
+        Pas de données chiffrées !
+      <?php endif; ?>
+      <hr>
+    <h4>Quantité de participation</h4>
+      <h5>Notes :</h5>
+      <?php for($j=0;$j < count($notes_par_exp[$i]['qt_p']);$j++ ): ?>
+           <?php echo $notes_par_exp[$i]['qt_p'][$j]; ?> ##
+        <?php endfor; ?>
+      <h5>Moyenne des notes :</h5>
+   
+      <?php if($moyennes[$i]['qt_p']>0): ?>
+        <?php echo $moyennes[$i]['qt_p']; ?>
+      <?php else: ?>
+        Pas de données chiffrées !
+      <?php endif; ?>
+
+      <hr>
+    <h4>Qualité de participation</h4>
+      <h5>Notes :</h5>
+      <?php for($j=0;$j < count($notes_par_exp[$i]['ql_p']);$j++ ): ?>
+            <?php echo $notes_par_exp[$i]['ql_p'][$j]; ?> ##
+        <?php endfor; ?>
+      <h5>Moyenne des notes :</h5>
+      
+      <?php if($moyennes[$i]['ql_p']>0): ?>
+        <?php echo $moyennes[$i]['ql_p']; ?>
+      <?php else: ?>
+        Pas de données chiffrées !
+      <?php endif; ?>
+
+      <hr>
+  </div>
+</div>
+<?php endfor; ?>
+
+
+
+<?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

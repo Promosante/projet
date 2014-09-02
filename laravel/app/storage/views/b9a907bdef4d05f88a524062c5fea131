@@ -1,0 +1,117 @@
+<?php $__env->startSection('projet-content'); ?>
+
+  <?php echo Form::open(array('url'=> URL::route('projectlieux.action',$id))); ?>
+    <h2>Gestion des Lieux<span class="glyphicon glyphicon-road pull-right"></span></h2>
+
+    <?php if($success): ?>
+                <div class="alert alert-success">
+                    <?php echo $success; ?>
+                </div>
+    <?php endif; ?>
+
+    <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+     <?php endif; ?>
+
+    <div class="row">
+            <div class="panel panel-info" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Lieux</strong> </div>
+                <div class="panel-body">
+                      <div class="table-responsive">  
+                          <table class="table table-hover table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th>Nom</th>
+                                      <th>Adresse</th>
+                                      <th>Ville</th>
+                                      <th>Code Postal</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <?php define('i',0); ?>
+                                <?php foreach($results as $lieu): ?>  
+                                 <?php $i=$i+1; ?>
+                                    <tr>
+                                      <td><?php echo $i; ?></td>
+                                      <td><?php echo $lieu->nom; ?></td>
+                                      <td><?php echo $lieu->adresse; ?></td>
+                                      <td><?php echo $lieu->ville; ?></td>
+                                      <td><?php echo $lieu->code_postal; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                              </tbody>
+                          </table>
+                        </div>   
+                </div>
+              </div>
+            </div>
+
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Ajouter un lieux : </h4>
+              <hr>
+           </div> 
+     </div>
+     
+     <div class="row"> 
+        <div class="col-md-3">
+            <?php echo Form::label('nom_ajout','Nom',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_ajout', 'Nom' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-3">
+            <?php echo Form::label('adresse_ajout','Adresse',['class'=>'form-label']); ?>
+            <?php echo Form::text('adresse_ajout', 'Adresse' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-2">
+            <?php echo Form::label('ville_ajout','Ville',['class'=>'form-label']); ?>
+            <?php echo Form::text('ville_ajout', 'Ville' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-2">
+            <?php echo Form::label('cp_ajout','Code Postal',['class'=>'form-label']); ?>
+            <?php echo Form::text('cp_ajout', 'Code Postal' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-2">
+            <?php echo Form::submit('Ajout',['class'=>'btn btn-success col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'ajout_lieu']); ?>
+        </div>
+    </div>
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Supprimer un lieux : (Nom et adresse exact) </h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-3">
+            <?php echo Form::label('nom_supp','Nom',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_supp', 'Nom' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-3">
+            <?php echo Form::label('adresse_supp','Adresse',['class'=>'form-label']); ?>
+            <?php echo Form::text('adresse_supp', 'Adresse' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-2">
+            <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'supp_lieu']); ?>
+        </div>
+    </div>
+
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Télécharger données CSV</h4>
+              <hr>
+           </div> 
+     </div>
+     <div class="row"> 
+        <div class="col-md-2">
+            <?php echo Form::submit('Download !',['class'=>'btn btn-info col-sm-2 col-xs-12','style'=>'width:100%;','name'=>'down_lieu']); ?>
+        </div>
+    </div>
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,182 @@
+<?php $__env->startSection('projet-content'); ?>
+
+  <?php echo Form::open(array('url'=> URL::route('projectlieux.action',$id),'enctype'=>'multipart/form-data')); ?>
+    <h2>Gestion des Lieux<span class="glyphicon glyphicon-road pull-right"></span></h2>
+
+    <?php if($success): ?>
+                <div class="alert alert-success"style="margin-top:15px">
+                    <?php echo $success; ?>
+                </div>
+    <?php endif; ?>
+
+    <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger" style="margin-top:15px">
+                    <?php foreach($errors as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+     <?php endif; ?>
+ 
+    <div class="row">
+            <div class="panel panel-info" style="margin-top:10px">
+              <div class="panel-heading" style="font-size:20px"><strong>Lieux</strong> </div>
+                <div class="panel-body">
+                    
+                      <div class="table-responsive">  
+                          <table id="simpleTable" class="table table-hover table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th data-sort="string">
+                                        <p class="btn btn-default trick" id="tri_nom" 
+                                            onclick="javascript:refresh_result('tri_nom','page_','ligne',<?php echo ceil(count($results)/15)+1; ?>,<?php echo count($results); ?>,15);"
+                                                   style="width:100%;">Nom</p></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_addr" 
+                                            onclick="javascript:refresh_result('tri_addr','page_','ligne',<?php echo ceil(count($results)/15)+1; ?>,<?php echo count($results); ?>,15);"
+                                            style="width:100%;">Adresse</p></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_ville" 
+                                            onclick="javascript:refresh_result('tri_ville','page_','ligne',<?php echo ceil(count($results)/15)+1; ?>,<?php echo count($results); ?>,15);" 
+                                                        style="width:100%;">Ville</p></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_cp" 
+                                            onclick="javascript:refresh_result('tri_cp','page_','ligne',<?php echo ceil(count($results)/15)+1; ?>,<?php echo count($results); ?>,15);" 
+                                                style="width:100%;">Code Postal</p></th>
+                                  </tr>
+                              </thead> 
+                              <tbody>
+                                <?php define('i',0) ?>
+                                <?php foreach($results as $lieu): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="l_<?php echo $i; ?>" name="ligne" onclick="javascript:hilight_line_for_details('l_<?php echo $i; ?>','ligne',<?php echo count($results); ?>,'success lieu_line','lieu_line')" class="lieu_line">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox('check_lieu_'.$i, 'yes',false,['id'=>'check_lieu_'.$i]); ?> </td>
+                                      <td><?php echo $lieu->nom; ?></td>
+                                      <td><?php echo $lieu->adresse; ?></td>
+                                      <td><?php echo $lieu->ville; ?></td>
+                                      <td><?php echo $lieu->code_postal; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                              </tbody>
+                          </table>
+                        </div> 
+                      
+                      <?php for($p=1; $p < ceil(count($results)/15)+1;$p=$p+1): ?>
+                          <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('page_','ligne',<?php echo $p; ?>,<?php echo ceil(count($results)/15)+1; ?>,<?php echo count($results); ?>,15);" 
+                                                                        id="page_<?php echo $p; ?>"><?php echo $p; ?></p>
+                      <?php endfor; ?>
+                </div>
+              </div>
+            </div>
+
+        <?php $i=0; ?>
+        <?php foreach($results as $lieu): ?>
+          <?php $i=$i+1; ?>
+            <div class="row details" id="d_<?php echo $i; ?>">
+              <div class="panel panel-success" style="margin-top:10px">
+                <div class="panel-heading" style="font-size:20px"><strong>Détails</strong> <div class="btn btn-danger pull-right" onclick="javascript:$('#d_<?php echo $i; ?>').hide(200);$('.lieu_line').attr('class','lieu_line');"><span class="glyphicon glyphicon-remove"></span></div></div>
+                  <div class="panel-body">
+                    <h4> <strong>Nom : </strong></h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->nom; ?></h4>
+                    <h4><strong>Adresse : </strong> </h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"><?php echo $lieu->adresse; ?></h4>
+                    <h4><strong>Ville : </strong></h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->ville; ?></h4>
+                    <h4><strong>Code Postal : </strong></h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->code_postal; ?></h4>
+                    <h4><strong>Ressources humaines : </strong></h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->ressources_humaines; ?></h4>
+                    <h4><strong>Ressources matérielles : </strong></h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->ressources_materielles; ?></h4>
+                    <h4><strong>Téléphone : </strong></h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->telephone; ?></h4>
+                    <h4><strong>Ajouté le : </strong></h4>
+                    <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->created_at; ?></h4>
+                    <div class="btn btn-success btn-lg pull-right"><span class="glyphicon glyphicon-globe pull-left" style="margin-right:10px;font-size:20pt"></span> Rechercher sur Google Map  </div>
+                  </div>
+              </div>
+            </div>
+    <?php endforeach; ?>
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Ajouter un lieux : </h4>
+              <hr>
+           </div> 
+     </div>
+     
+     <div class="row"> 
+        <div class="col-md-6">
+            <?php echo Form::label('nom_ajout','Nom',['class'=>'form-label','style'=>'width:100%;margin-top:25px']); ?>
+            <?php echo Form::text('nom_ajout', 'Nom' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-6">
+            <?php echo Form::label('adresse_ajout','Adresse',['class'=>'form-label','style'=>'width:100%;margin-top:25px']); ?>
+            <?php echo Form::text('adresse_ajout', 'Adresse' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-4">
+            <?php echo Form::label('ville_ajout','Ville',['class'=>'form-label','style'=>'width:100%;margin-top:25px']); ?>
+            <?php echo Form::text('ville_ajout', 'Ville' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-2">
+            <?php echo Form::label('cp_ajout','Code Postal',['class'=>'form-label','style'=>'width:100%;margin-top:25px']); ?>
+            <?php echo Form::text('cp_ajout', 'Code Postal' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-4">
+            <?php echo Form::label('tel_ajout','Telephone',['class'=>'form-label','style'=>'width:100%;margin-top:25px']); ?>
+            <?php echo Form::text('tel_ajout', '06 06 06 06 06' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-6">
+            <?php echo Form::label('ress_h_ajout','Ressources humaines disponibles',['class'=>'form-label','style'=>'width:100%;margin-top:25px']); ?>
+            <?php echo Form::textarea('ress_h_ajout', 'Ressources humaines' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-6">
+            <?php echo Form::label('ress_m_ajout','Ressources matérielles disponibles',['class'=>'form-label','style'=>'width:100%;margin-top:25px']); ?>
+            <?php echo Form::textarea('ress_m_ajout', 'Ressources matérielles' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-2">
+            <?php echo Form::submit('Ajout',['class'=>'btn btn-success col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'ajout_lieu']); ?>
+        </div>
+    </div>
+    
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Supprimer les lieux cochés : </h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-2">
+            <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'supp_lieu']); ?>
+        </div>
+    </div>
+
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Télécharger données CSV</h4>
+              <hr>
+           </div> 
+     </div>
+     <div class="row"> 
+        <div class="col-md-2">
+            <?php echo Form::submit('Download !',['class'=>'btn btn-info col-sm-2 col-xs-12','style'=>'width:100%;','name'=>'down_lieu']); ?>
+        </div>
+    </div>
+    <h4 style="margin-top:35px"><strong>Importer données CSV</strong></h4>
+    <hr>
+    <div class="row"> 
+          <div class="alert alert-info">
+              L'ordre des champs doit être le suivant : nom,adresse,ville,code postal,telephone,ressource humaine,ressource matérielle. La première ligne est ignorée et les champs doivent avoir moins de 1024 caractères. Si vous passez des lignes à la fin du fichier vous obtiendrez une erreur (sans conséquence pour la saisie).
+          </div>
+            <div class="form-group"> 
+                  <?php echo Form::file('fichier'); ?>
+                
+                <?php echo Form::submit('Go!',['class'=>'btn btn-info col-sm-2 col-xs-12 pull-right','name'=>'upload_csv']); ?>
+            </div>
+          
+    </div>
+<?php echo Form::close(); ?>
+<script>
+$(".details").hide();
+pagine_results('page_','ligne',1,<?php echo ceil(count($results)/15)+1; ?>,<?php echo count($results); ?>,15);
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

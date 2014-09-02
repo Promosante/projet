@@ -1,0 +1,87 @@
+<?php $__env->startSection('admin-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('adminmembres.action'))); ?>
+<div class="alert alert-info">
+	Seul le super-administrateur peut rétrograder les autres administrateurs.
+</div>
+<?php if($success): ?>
+     <div class="alert alert-success">
+        <?php echo $success; ?>
+      </div>
+<?php endif; ?>
+<div class="row">
+<?php echo Form::submit('Elever en tant qu\'admin',['class'=>'btn btn-success col-sm-3 col-xs-12 pull-left','style'=>'margin-top:25px','name'=>'elever']); ?>
+<?php echo Form::submit('Rétrograder en tant qu\'admin',['class'=>'btn btn-danger col-sm-3 col-xs-12 pull-right','style'=>'margin-top:25px','name'=>'retrograde']); ?>
+</div>
+<div class="row">
+  <?php echo Form::submit('Supprimer Compte',['class'=>'btn btn-danger col-sm-3 col-xs-12 pull-right','style'=>'margin-top:25px','name'=>'supprime_compte']); ?>
+</div>
+
+<div class="hidden">
+     <?php echo $ligneName='ligne_membre_name';; ?>
+     <?php echo $ligneId='ligne_membre_';; ?>
+     <?php echo $NbPerPage=10;; ?>
+     <?php echo $ligneClass='line_membres_class';; ?>
+     <?php echo $checkNameAndId='check_';; ?>
+     <?php echo $Nb_pages=ceil(count($membres)/$NbPerPage)+1;; ?>
+     <?php echo $Nb_El=count($membres);; ?>
+     <?php echo $pageId='page_';; ?>
+</div> 
+    <hr>
+
+    <hr>
+		<div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Liste des membres</strong> </div>
+                          <div class="panel-body">
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                         <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_admin" onclick="javascript:refresh_result('tri_nom_admin','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_prenom" onclick="javascript:refresh_result('tri_prenom','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Prenom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_structure" onclick="javascript:refresh_result('tri_structure','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Structure</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_fonction" onclick="javascript:refresh_result('tri_fonction','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Fonction</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_ville" onclick="javascript:refresh_result('tri_ville','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Ville</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_compte" onclick="javascript:refresh_result('tri_compte','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Compte ?</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_admin" onclick="javascript:refresh_result('tri_admin','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Admin ?</p></th>
+                                       </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($membres as $m): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>');" class="<?php echo $ligneClass; ?>">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      <td><?php echo $m->nom; ?></td>
+                                      <td><?php echo $m->prenom; ?></td>
+                                      <td class="ligne_structure"><?php echo $m->structure; ?></td>
+                                      <td class="ligne_fonction"><?php echo $m->fonction; ?></td>
+                                      <td><?php echo $m->ville; ?></td>
+                                      <td><?php echo $infoenplus[$i-1]['compte']; ?></td>
+                                      <td><?php echo $infoenplus[$i-1]['admin']; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+
+                            </div>
+                            
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+
+                      </div>
+                </div>
+<?php echo Form::close(); ?>
+
+<?php echo HTML::script('js/admin_membres.js');; ?>
+
+<script>
+
+</script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.admin-layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

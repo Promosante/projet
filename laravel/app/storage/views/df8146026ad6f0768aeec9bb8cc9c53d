@@ -1,0 +1,8 @@
+<?php $__env->startSection('admin-content'); ?>
+
+<div class="alert alert-info">
+	Seul le super-administrateur peut rétrograder les autres administrateurs.
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.admin-layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

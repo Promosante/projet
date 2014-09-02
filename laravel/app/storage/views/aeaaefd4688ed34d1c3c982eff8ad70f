@@ -1,0 +1,61 @@
+<?php $__env->startSection('projet-content'); ?>
+<div class="row">
+          <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Domaine cd l'indicateur : Réalisation</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : quantité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 1</h4>
+                                    <h4>Indicateur 2</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : qualité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 3</h4>
+                                    <h4>Indicateur 4</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+            </div>
+<div class="row">
+          <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Domaine cd l'indicateur : Participation</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : quantité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 5</h4>
+                                    <h4>Indicateur 6</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : qualité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 7</h4>
+                                    <h4>Indicateur 8</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+            </div>
+    
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

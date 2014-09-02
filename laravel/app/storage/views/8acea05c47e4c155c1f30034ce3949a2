@@ -1,0 +1,41 @@
+<?php $__env->startSection('body'); ?>
+<div class="container">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8 col-xs-12 col-sm-12">
+            <br>
+            <h1>Nous contacter</h1>
+            <br>
+            <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+            <?php endif; ?>
+            <?php echo Form::open(array('url'=> URL::route('nouscontacter.action'))); ?>
+            <div class="form-group">
+                <?php echo Form::label('email_guest','Votre email',['class'=>'form-label']); ?>
+                <?php echo Form::text('email_guest','exemple@exemple.com',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('objet','Objet',['class'=>'form-label']); ?>
+                <?php echo Form::text('objet','Objet',['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('content','Contenu',['class'=>'form-label']); ?>
+                <?php echo Form::textarea('content','Contenu',['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::submit('Envoyer !',['class'=>'btn btn-primary col-sm-2 col-xs-12 pull-right top-marge-button']); ?>
+            </div> 
+            <?php echo Form::close(); ?>
+         </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

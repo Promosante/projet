@@ -1,0 +1,44 @@
+<script>
+
+
+
+    $(document).ready(function(){
+
+
+               
+              //when the Add Filed button is clicked
+              $("body").on("click", ".add_categorie",function (e) {
+                  //Append a new row of code to the "#items" div
+                  $(".itemset_categorie").append('<div><?php echo Form::select("qualite_supp", array("E" => "Expert", "C" => "Collaborateur","I"=>"Intervenant","P"=>"Participant"), null,["style"=>"margin-top:10px"]);; ?> <button class="delete_categorie btn btn-danger"><span class="glyphicon glyphicon-remove pull-right"></span></button></div>');
+                });
+
+              $("body").on("click", ".delete_categorie", function (e) {
+                  $(this).parent("div").remove();
+              });
+
+              $("body").on("click", ".add_outils",function (e) {
+                  //Append a new row of code to the "#items" div
+                  $(".itemset_outils").append('<div><?php echo Form::select("qualite_supp", array("E" => "Expert", "C" => "Collaborateur","I"=>"Intervenant","P"=>"Participant"), null,["style"=>"margin-top:10px"]);; ?> <button class="delete_outils btn btn-danger"><span class="glyphicon glyphicon-remove pull-right"></span></button></div>');
+                });
+
+              $("body").on("click", ".delete_outils", function (e) {
+                  $(this).parent("div").remove();
+              });
+
+              $("body").on("click", ".add_indicateurs",function (e) {
+                  //Append a new row of code to the "#items" div
+                  $(".itemset_indicateurs").append('<div><?php echo Form::select("qualite_supp", array("E" => "Expert", "C" => "Collaborateur","I"=>"Intervenant","P"=>"Participant"), null,["style"=>"margin-top:10px"]);; ?> <button class="delete_indicateurs btn btn-danger"><span class="glyphicon glyphicon-remove pull-right"></span></button></div>');
+                });
+
+              $("body").on("click", ".delete_indicateurs", function (e) {
+                  $(this).parent("div").remove();
+              });
+              
+               
+              
+
+          });
+
+  
+
+    </script>

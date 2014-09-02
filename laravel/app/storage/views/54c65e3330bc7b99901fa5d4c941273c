@@ -1,0 +1,38 @@
+<?php $__env->startSection('body'); ?>
+
+    <div class="container">
+      <p style="font-size:55px;margin-top:10px;">Projet</p>
+      <div class="row">
+        
+         <div class="col-sm-3 col-md-3 sidebar">
+          <ul class="nav nav-pills nav-stacked" style="margin-top:100px">
+            <h4>Administration du projet</h4>
+            <hr>
+
+            <li class="<?php echo Request::is( '*/*/edit') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'my-projects/'.$id.'/edit'); ?>">Modifier les informations</a></li>
+            <li class="<?php echo Request::is( 'my-projects') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'my-projects'); ?>">Gestion de l'expertise</a></li>
+            <li class="<?php echo Request::is( '*/*/members') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'my-projects/'.$id.'/members'); ?>">Gestion des membres</a></li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Gestion des lieux</span></a></li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Gestion des indicateurs</span></a></li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Gestion des outils</a></li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Gestion des catégorie d'activités</span></a></li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Associations Activités/lieux/Groupes</span></a></li>
+            <h4 style="margin-top:30px;">Déroulement du projet</h4>
+            <hr>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Calendrier</span></a></li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Visualisation</span></a></li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Déposer un compte-rendu</span></a></li>
+            <h4 style="margin-top:30px;">Synthèse du projet</h4>
+            <hr>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Notation</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-8"style="margin-left:20px">
+          <?php echo $__env->yieldContent('projet-content'); ?>
+        </div>
+      </div>
+  </div>
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

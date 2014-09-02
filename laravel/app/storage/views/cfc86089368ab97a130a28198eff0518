@@ -1,0 +1,56 @@
+<?php $__env->startSection('mesprojet-content'); ?>
+
+            <h1>Créer un nouveau projet<span class="glyphicon glyphicon-tasks pull-right"></span></h1>
+            
+            <?php if(Session::has('success')): ?>
+                <div class="alert alert-success">
+                    <?php echo Session::get('success'); ?>
+                </div>
+            <?php endif; ?>
+            <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+            <?php endif; ?>
+            <?php echo Form::open(array('url'=> URL::route('newproject.createnew'))); ?>
+            <div class="form-group">
+                <?php echo Form::label('nomprojet','Titre',['class'=>'form-label']); ?>
+                <?php echo Form::text('nomprojet','Titre projet',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('acronyme','Acronyme',['class'=>'form-label']); ?>
+                <?php echo Form::text('acronyme','acronyme',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('objectif','Objectif principal',['class'=>'form-label']); ?>
+                <?php echo Form::textarea('objectif','objectif principal',['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('objectif_specifique','Objectif spécifique',['class'=>'form-label']); ?>
+                <?php echo Form::textarea('objectif_specifique','objectif spécifique',['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('population_cible','Population cible',['class'=>'form-label']); ?>
+                <?php echo Form::text('population_cible','population',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('date_debut','Date de début',['class'=>'form-label']); ?>
+                <?php echo Form::text('date_debut','01/01/2000',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('date_fin','Date de fin',['class'=>'form-label']); ?>
+                <?php echo Form::text('date_fin','01/01/2000',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('date_fin','Fichier descriptif',['class'=>'form-label']); ?>
+                <?php echo Form::file('fichier'); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::submit('Créer projet !',['class'=>'btn btn-primary col-sm-2 col-xs-12 pull-right top-marge-button']); ?>
+            </div> 
+            <?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.mesprojet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

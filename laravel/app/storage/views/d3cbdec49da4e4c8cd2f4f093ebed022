@@ -1,0 +1,129 @@
+<?php $__env->startSection('projet-content'); ?>
+
+  <?php echo Form::open(array('url'=> URL::route('projectlieux.action',$id))); ?>
+    <h2>Gestion des indicateurs<span class="glyphicon glyphicon-asterisk pull-right"></span></h2>
+
+    <?php if($success): ?>
+                <div class="alert alert-success">
+                    <?php echo $success; ?>
+                </div>
+    <?php endif; ?>
+
+    <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+     <?php endif; ?>
+     <div class="row">
+          <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Domaine cd l'indicateur : Réalisation</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : quantité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 1</h4>
+                                    <h4>Indicateur 2</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : qualité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 3</h4>
+                                    <h4>Indicateur 4</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+            </div>
+    <div class="row">
+          <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Domaine cd l'indicateur : Participation</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : quantité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 5</h4>
+                                    <h4>Indicateur 6</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      <div class="row">
+                              <div class="panel panel-info" style="margin-top:20px">
+                                <div class="panel-heading" style="font-size:20px"><strong>Déclinaison de l'indicateur : qualité</strong> </div>
+                                  <div class="panel-body">
+                                    <h4>Indicateur 7</h4>
+                                    <h4>Indicateur 8</h4>
+                                  </div>
+                                </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+            </div>
+    <div class="row">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Ajouter un indicateur : </h4>
+              <hr>
+           </div> 
+     </div>
+     
+     <div class="row"> 
+        <div class="col-md-6">
+            <?php echo Form::label('description_ajout','Description',['class'=>'form-label']); ?>
+            <?php echo Form::textarea('description_ajout', 'Description' ,['class'=>'form-control']); ?>
+        </div>
+        <div class="col-md-4">
+            <?php echo Form::label('nom_ajout','Nom de la catégorie',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_ajout', 'Nom' ,['class'=>'form-control']); ?>
+            <?php echo Form::label('outil_ajout','Outil à utiliser',['class'=>'form-label','style'=>'margin-top:20px;']); ?>
+            <div class="btn-group"style="width:100%">
+                  <button type="button" class="btn btn-default">Outils disponibles</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+              <?php echo Form::submit('Ajout',['class'=>'btn btn-success col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'ajout_lieu']); ?>
+        </div>
+    </div>
+    <div class="row" style="margin-top:10px;">
+          <div class="col-md-6">
+              <h4 style="margin-top:35px">Supprimer une catégorie d'activité </h4>
+              <hr>
+           </div> 
+     </div>
+
+     <div class="row"> 
+        <div class="col-md-5">
+            <?php echo Form::label('nom_supp','Nom de la catégorie (exact)',['class'=>'form-label']); ?>
+            <?php echo Form::text('nom_supp', 'Nom' ,['class'=>'form-control']); ?>
+        </div>
+        
+        <div class="col-md-2">
+            <?php echo Form::submit('Supprimer',['class'=>'btn btn-danger col-sm-2 col-xs-12','style'=>'width:100%;margin-top:25px','name'=>'supp_lieu']); ?>
+        </div>
+    </div>
+
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

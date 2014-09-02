@@ -1,0 +1,44 @@
+<?php $__env->startSection('messagerie-content'); ?>
+<h2>Nouveau message<span class="glyphicon glyphicon-envelope pull-right"></span></h2>
+          <br>
+          <?php if(Session::has('success')): ?>
+                <div class="alert alert-success">
+                    <?php echo Session::get('success'); ?>
+                </div>
+            <?php endif; ?>
+            <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+            <?php endif; ?>
+            <?php if(Session::has('error_login')): ?>
+                <div class="alert alert-danger">
+                    <p><?php echo Session::get('error_login'); ?></p>
+                </div>
+            <?php endif; ?>
+            
+          <div class="row">
+          <?php echo Form::open(array('url'=> URL::route('messagerie.send_message'))); ?>
+            <div class="form-group">
+                <?php echo Form::label('dest','Login destinataire',['class'=>'form-label']); ?>
+                <?php echo Form::text('dest','Login',['class'=>'form-control']); ?>
+            </div>
+           <div class="form-group">
+                <?php echo Form::label('subject','Sujet',['class'=>'form-label']); ?>
+                <?php echo Form::text('subject','Sujet',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::label('content','Contenu',['class'=>'form-label']); ?>
+                <?php echo Form::textarea('content','Contenu',['class'=>'form-control']); ?>
+            </div>
+            <div class="form-group">
+                <?php echo Form::submit('Envoyer !',['class'=>'btn btn-primary col-sm-2 col-xs-12 pull-right top-marge-button']); ?>
+            </div> 
+            <?php echo Form::close(); ?>
+         </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.messagerie', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

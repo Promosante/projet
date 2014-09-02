@@ -1,0 +1,70 @@
+<?php $__env->startSection('body'); ?>
+
+    <div class="container">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8 col-xs-12 col-sm-12">
+            <br>
+            <h1>Editer le profil</h1>
+            <br>
+            <?php if(Session::has('success')): ?>
+                <div class="alert alert-success">
+                    <?php echo Session::get('success'); ?>
+                </div>
+            <?php endif; ?>
+            <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+            <?php endif; ?>
+            <?php echo Form::open(array('url'=> URL::route('editprofil.edit'))); ?>
+             <div class="form-group">
+                <?php echo Form::label('nom','Votre nom',['class'=>'form-label']); ?>
+                <?php echo Form::text('nom',$results[0]->nom ,['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('prenom','Votre prenom',['class'=>'form-label']); ?>
+                <?php echo Form::text('prenom', $results[0]->prenom ,['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('structure','Votre structure',['class'=>'form-label']); ?>
+                <?php echo Form::text('structure', $results[0]->structure ,['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('fonction','Votre fonction',['class'=>'form-label']); ?>
+                <?php echo Form::text('fonction', $results[0]->fonction ,['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('datenaissance','Votre date de naissance (format JJ/MM/AAAA)',['class'=>'form-label']); ?>
+                <?php echo Form::text('datenaissance',$results[0]->datenaissance,['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('adresse','Votre adresse',['class'=>'form-label']); ?>
+                <?php echo Form::text('adresse',$results[0]->adresse,['class'=>'form-control']); ?>
+            </div>
+             <div class="form-group">
+                <?php echo Form::label('codepostal','Votre code postal',['class'=>'form-label']); ?>
+                <?php echo Form::text('codepostal',$results[0]->codepostal,['class'=>'form-control']); ?>
+            </div>   
+              <div class="form-group">
+                <?php echo Form::label('ville','Votre ville',['class'=>'form-label']); ?>
+                <?php echo Form::text('ville',$results[0]->ville,['class'=>'form-control']); ?>
+            </div>  
+             <div class="form-group">
+                <?php echo Form::label('pays','Votre Pays',['class'=>'form-label']); ?>
+                <?php echo Form::text('pays',$results[0]->pays,['class'=>'form-control']); ?>
+            </div> 
+            <div class="form-group">
+                <?php echo Form::submit('Editer le profil!',['class'=>'btn btn-primary col-sm-2 col-xs-12 pull-right top-marge-button']); ?>
+            </div>  
+            <?php echo Form::close(); ?>
+         </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

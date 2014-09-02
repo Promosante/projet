@@ -1,0 +1,43 @@
+<?php $__env->startSection('body'); ?>
+<?php echo Form::open(array('url'=> URL::route('profil.edit'))); ?>
+    <div class="container">
+      <p style="font-size:55px;margin-top:10px;">Mon profil</p>
+      <div class="row">
+
+        <div class="col-sm-4 ">
+          Date creation :<br> <?php echo $results[0]->created_at; ?><br><br>
+          Derniere mise a jour : <br><?php echo $results[0]->updated_at; ?><br>
+        </div>
+
+        <div class="col-sm-6">
+          <h2><?php echo $results[0]->login; ?> :</h2>
+          <br>
+          <div class="panel panel-info">
+            <div class="panel-heading" style="font-size:22px"><strong><?php echo $results[0]->prenom; ?> <?php echo $results[0]->nom; ?></strong></div>
+            <div class="panel-body">
+              <div class="container">
+                  <h4> <strong>Email :</strong> <?php echo $results[0]->email; ?></h4>
+                  <h4> <strong>Fonction :</strong> <?php echo $results[0]->fonction; ?></h4>
+                  <h4> <strong>Structure :</strong> <?php echo $results[0]->structure; ?></h4>
+                  <h4> <strong>Date de naissance :</strong> <?php echo $results[0]->datenaissance; ?></h4>
+                  <h4> <strong>Adresse :</strong> <?php echo $results[0]->adresse; ?></h4>
+                  <h4> <strong>Code postal :</strong> <?php echo $results[0]->codepostal; ?></h4>
+                  <h4> <strong>Ville :</strong> <?php echo $results[0]->ville; ?></h4>
+                  <h4> <strong>Pays :</strong> <?php echo $results[0]->pays; ?></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <?php echo Form::submit('Editer mon profil',['class'=>'btn btn-primary pull-right','name'=>'edit']); ?>
+          </div>
+        </div>
+  </div>
+<?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

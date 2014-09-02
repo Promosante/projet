@@ -1,0 +1,93 @@
+<?php $__env->startSection('body'); ?>
+<?php echo Form::open(array('url'=> URL::route('recherche.search'))); ?> 
+<div class="row">    
+  <div class="jumbotron"> 
+   
+                 <div class="row">
+                    <div class="col-md-1 col-xs-1"></div>
+                    <div class="col-md-10 col-xs-10 col-sm-12">
+                        <h1>Recherche</h1><br><br>
+                        <?php echo Form::label('login','Recherche par login',['class'=>'form-label']); ?>
+                        <?php echo Form::text('login','',['class'=>'form-control']); ?>
+                        <button class="btn btn-primary col-sm-1 col-xs-12 pull-right top-marge-button" ><span class="glyphicon glyphicon-search pull-right"></span></button>
+                        <br><br>
+                        <?php echo Form::label('email','Recherche par email',['class'=>'form-label']); ?>
+                        <?php echo Form::text('email','',['class'=>'form-control']); ?>
+                        <button class="btn btn-primary col-sm-1 col-xs-12 pull-right top-marge-button"><span class="glyphicon glyphicon-search pull-right"></span></button>
+                        <br><br>
+                       
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+    </div>
+  
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1 col-xs-1"></div>
+        
+        <div class="col-md-10 col-xs-10 col-sm-12">
+          
+
+        <?php if($succ==1): ?>
+          <div class="alert alert-success">
+              Some result(s) have been found !        
+          </div>
+          <div class="row">
+            <div class="panel panel-info" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Résultat :</strong></div>
+                <div class="panel-body">
+                  <div class="table-responsive">  
+                          <table class="table table-hover table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th>Nom</th>
+                                      <th>Prénom</th>
+                                      <th>Login</th>
+                                      <th>Email</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                               
+                                <?php define('i',0); ?>
+                                
+                                 <?php foreach($res as $member): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr onclick="document.location.href='#'" style="cursor:pointer">
+                                      <td><?php echo $i; ?></td>
+                                      <td><?php echo $member->nom; ?></td>
+                                      <td><?php echo $member->prenom; ?></td>
+                                      <td><?php echo $member->login; ?></td>
+                                     <td><?php echo $member->email; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                 
+                                 
+                                   
+                              </tbody>
+                          </table>
+                        </div>
+                </div>
+              </div>
+            </div>
+          <?php endif; ?>   
+           
+         
+
+         <?php if($err==1): ?>
+            <div class="alert alert-danger">
+               Sorry, no result(s) found !
+            </div>
+         <?php endif; ?> </div>
+         <div class="col-md-1"></div>
+         </div>         
+        </div>
+       </div> 
+       
+       
+ 
+
+ <?php echo Form::close(); ?> 
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

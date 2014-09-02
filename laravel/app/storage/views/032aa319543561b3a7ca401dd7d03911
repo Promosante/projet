@@ -1,0 +1,21 @@
+<?php $__env->startSection('body'); ?>
+<div class="row">
+	<div class="col-md-3 sidebar">
+		<div class="jumbotron" style="height:100%">
+              <ul class="nav nav-pills nav-stacked" style="margin-top:170px">
+              	 <li class="<?php echo Request::is( 'admin') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'admin'); ?>">Accueil<span class="glyphicon glyphicon-home pull-right"></span></a></li>
+                <li class="<?php echo Request::is( 'admin/membres') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'admin/membres'); ?>">Membres <span class="glyphicon glyphicon-tasks pull-right"></span></a></li>
+                <li class="<?php echo Request::is( '') ? 'active' : ''; ?>"><a href="<?php echo URL::to( ''); ?>"><span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
+                <li class="<?php echo Request::is( '') ? 'active' : ''; ?>"><a href="<?php echo URL::to( ''); ?>"><span class="glyphicon glyphicon-trash pull-right"></span></a></li>
+                <li style="height:300px"></li>
+              </ul>
+		</div>
+	</div>
+	<div class="col-md-8" style="margin-top:50px">
+			
+				<?php echo $__env->yieldContent('admin-content'); ?>
+			
+	</div>
+</div>
+<?php $__env->stopSection(); ?> 
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

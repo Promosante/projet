@@ -1,0 +1,189 @@
+<?php $__env->startSection('body'); ?>
+<?php echo Form::open(array('url'=> URL::route('recherche.action'))); ?> 
+<div class="row">    
+  <div class="jumbotron"> 
+   
+                 <div class="row">
+                    <div class="col-md-1 col-xs-1"></div>
+                    <div class="col-md-10 col-xs-10 col-sm-12">
+                        <h1>Recherche</h1>
+                        <hr>
+                        <?php echo Form::label('mots_cles','Mots clés',['class'=>'form-label','style'=>'margin-top:15px']); ?>
+                        <?php echo Form::text('mots_cles','',['class'=>'form-control']); ?>
+                        <button class="btn btn-primary col-sm-1 col-xs-12 pull-right top-marge-button"><span class="glyphicon glyphicon-search pull-right"></span></button>
+                        <h2>Rechercher parmis : </h2>
+                        <div class="col-md-2">
+                          <?php echo Form::label('projet_check','Projets',['class'=>'form-label','style'=>'margin-top:15px']); ?>
+                          <?php echo Form::checkbox('projet_check', 'yes',true,['id'=>'projet_check']); ?>
+                        </div>
+                        <div class="col-md-2">
+                          <?php echo Form::label('membres_check','Membres (nf)',['class'=>'form-label','style'=>'margin-top:15px']); ?>
+                          <?php echo Form::checkbox('membres_check', 'yes',true,['id'=>'membres_check']); ?>
+                        </div>
+                        <div class="col-md-2">
+                          <?php echo Form::label('lieu_check','Lieux',['class'=>'form-label','style'=>'margin-top:15px']); ?>
+                          <?php echo Form::checkbox('lieu_check', 'yes',true,['id'=>'lieu_check']); ?>
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+
+    </div>
+  
+ 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1 col-xs-1"></div>
+        
+        <div class="col-md-10 col-xs-10 col-sm-12">
+          
+
+        <?php if($resProj): ?>
+          <div class="alert alert-success">
+              Des projets ont été trouvés !
+          </div>
+          <div class="row">
+            <div class="panel panel-info" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Résultat :</strong></div>
+                <div class="panel-body">
+                  <div class="table-responsive">  
+                          <table class="table table-hover table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th>Acronyme</th>
+                                      <th>Titre</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <?php define('i',0); ?>
+                                
+                                 <?php foreach($resProj as $p): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr onclick="document.location.href='/projet/<?php echo Crypt::encrypt($p->id); ?>'" style="cursor:pointer">
+                                      <td><?php echo $i; ?></td>
+                                      <td><?php echo $p->acronyme; ?></td>
+                                      <td><?php echo $p->titre; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                              </tbody>
+                          </table>
+                        </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <hr>
+          <?php endif; ?>
+          <?php if($resLieux): ?>
+          <div class="hidden">
+           <?php echo $ligneName='line_lieu_name';; ?>
+           <?php echo $ligneId='l_';; ?>
+           <?php echo $NbPerPage=10;; ?>
+           <?php echo $ligneClass='lieu_class';; ?>
+           <?php echo $Nb_pages=ceil(count($resLieux)/$NbPerPage)+1;; ?>
+           <?php echo $Nb_El=count($resLieux);; ?>
+           <?php echo $pageId='page_lieu_id';; ?>
+         </div>
+          <div class="alert alert-success">
+              Des lieux ont été trouvés !
+          </div>
+
+           <div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Lieux :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                         <th data-sort="string">
+                                        <p class="btn btn-default trick" id="tri_nom" 
+                                            onclick="javascript:refresh_result('tri_nom','<?php echo $pageId; ?>','<?php echo $ligneName; ?>', <?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?> );"
+                                                   style="width:100%;">Nom</p></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_addr" 
+                                            onclick="javascript:refresh_result('tri_addr','<?php echo $pageId; ?>','<?php echo $ligneName; ?>', <?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?> );"
+                                            style="width:100%;">Adresse</p></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_ville" 
+                                            onclick="javascript:refresh_result('tri_ville','<?php echo $pageId; ?>','<?php echo $ligneName; ?>', <?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?> );" 
+                                                        style="width:100%;">Ville</p></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_cp" 
+                                            onclick="javascript:refresh_result('tri_cp','<?php echo $pageId; ?>','<?php echo $ligneName; ?>', <?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?> );" 
+                                                style="width:100%;">Code Postal</p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($resLieux as $lieu): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line_for_details('<?php echo $ligneId.$i; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_El; ?>,'success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      <td><?php echo $i; ?> </td>
+                                      <td><?php echo $lieu->nom; ?></td>
+                                      <td><?php echo $lieu->adresse; ?></td>
+                                      <td><?php echo $lieu->ville; ?></td>
+                                      <td><?php echo $lieu->code_postal; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+                </div>
+              <?php $i=0; ?>
+               <?php foreach($resLieux as $lieu): ?>
+               <?php $i=$i+1; ?>
+                   <div class="row details" id="d_<?php echo $i; ?>">
+                    <div class="panel panel-success" style="margin-top:10px">
+                      <div class="panel-heading" style="font-size:20px"><strong>Détails</strong> <div class="btn btn-danger pull-right" onclick="javascript:$('#d_<?php echo $i; ?>').hide(200);$('.lieu_line').attr('class','lieu_line');"><span class="glyphicon glyphicon-remove"></span></div></div>
+                        <div class="panel-body">
+                          <h4> <strong>Dans le projet : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->titre_projo; ?></h4>
+                          <h4> <strong>Nom : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->nom; ?></h4>
+                          <h4><strong>Adresse : </strong> </h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"><?php echo $lieu->adresse; ?></h4>
+                          <h4><strong>Ville : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->ville; ?></h4>
+                          <h4><strong>Code Postal : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->code_postal; ?></h4>
+                          <h4><strong>Ressources humaines : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->ressources_humaines; ?></h4>
+                          <h4><strong>Ressources matérielles : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->ressources_materielles; ?></h4>
+                          <h4><strong>Téléphone : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->telephone; ?></h4>
+                          <h4><strong>Ajouté le : </strong></h4>
+                          <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $lieu->created_at; ?></h4>
+                          <div class="btn btn-success btn-lg pull-right"><span class="glyphicon glyphicon-globe pull-left" style="margin-right:10px;font-size:20pt"></span> Rechercher sur Google Map  </div>
+                        </div>
+                    </div>
+                  </div>
+            <?php endforeach; ?>
+          <?php endif; ?>      
+         <?php if($err==1): ?>
+            <div class="alert alert-danger">
+               Pas de résultats !
+            </div>
+         <?php endif; ?> 
+       </div>
+         <div class="col-md-1"></div>
+         </div>         
+        </div>
+       </div> 
+       
+       <script>
+       $(".details").hide();
+       </script>
+ 
+
+ <?php echo Form::close(); ?> 
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,54 @@
+<?php $__env->startSection('mesprojet-content'); ?>
+
+            <h1>Mes projets<span class="glyphicon glyphicon-list-alt pull-right"></span></h1>
+            <br>
+            <?php echo Form::open(array('url'=> URL::route('mesprojets.action'))); ?>
+            <div class="row">
+                <?php echo Form::submit('Corbeille',['class'=>'btn btn-danger col-sm-2 col-xs-12 pull-left' ,'name'=>'delete']); ?>
+            </div>
+          <div class="row">
+          <div class="panel panel-info" style="margin-top:20px">
+            <div class="panel-heading" style="font-size:20px"><strong>Projets :</strong></div>
+                <div class="panel-body">
+                      <div class="table-responsive">  
+                          <table class="table table-hover table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th>Createur</th>
+                                      <th>Titre</th>
+                                      <th>Date</th>
+                                      <th>Check </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                               
+                                <?php define('i',0); ?>
+                                
+                                 <?php foreach($projets as $projet): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr onclick="document.location.href='my-projects/<?php echo $i; ?>'" style="cursor:pointer">
+                                      <td><?php echo $i; ?></td>
+                                      <td><?php echo $projet->login; ?></td>
+                                      <td><?php echo $projet->titre; ?></td>
+                                      <td><?php echo $projet->created_at; ?></td>
+                                      <td>
+                                          <?php echo Form::checkbox('msg'.$i, ''.$i); ?>  
+                                      </td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                 
+                                 <?php echo Form::close(); ?>
+                                   
+                              </tbody>
+                          </table>
+                        </div>
+                  
+                    </div>
+               
+              </div>
+           </div>
+           <?php echo Form::close(); ?>
+            
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.mesprojet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

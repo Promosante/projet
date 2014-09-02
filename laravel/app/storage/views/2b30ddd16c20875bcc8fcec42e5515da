@@ -1,0 +1,102 @@
+<?php $__env->startSection('body'); ?>
+
+    
+     
+      <div class="row">
+        
+         <div class="col-sm-3 col-md-3 sidebar" style="height:100%">
+          <div class="jumbotron"> 
+          <ul class="nav nav-pills nav-stacked" style="margin-top:190px">
+            <h4>Administration du projet</h4>
+            <hr>
+
+            <li class="<?php echo Request::is( '*/*/edit') ? 'active' : ''; ?> testcss">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/edit'); ?>">
+                Modifier les informations
+                  <span class="glyphicon glyphicon-list-alt pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '*/*/categorie_activite') ? 'active testcss' : ''; ?> testcss">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/categorie_activite'); ?>">
+                Gestion des catégorie d'activités
+                <span class="glyphicon glyphicon-th pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '*/*/activites') ? 'active testcss' : ''; ?> testcss">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/activites'); ?>">
+                Gestion des activités<span class="glyphicon glyphicon-th-list pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '*/*/members') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/members'); ?>">
+                Gestion des membres 
+                <span class="glyphicon glyphicon-user pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '*/*/lieux') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/lieux'); ?>">
+                Gestion des lieux
+                <span class="glyphicon glyphicon-road pull-right"></span>
+              </a>
+              </li>
+            <li class="<?php echo Request::is( '*/*/indicateurs') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/indicateurs'); ?>">
+                Gestion des indicateurs
+                <span class="glyphicon glyphicon-asterisk pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '*/*/outils') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/outils'); ?>">
+                Gestion des outils<span class="glyphicon glyphicon-wrench pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '*/*/associations') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/associations'); ?>">
+                Associations Activités/lieux/Groupes
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( ''); ?>">
+                Gestion de l'expertise
+              </a>
+            </li>
+            <h4 style="margin-top:30px;">Déroulement du projet</h4>
+            <hr>
+            <li class="<?php echo Request::is( '*/*/calendrier') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'my-projects/'.$id.'/calendrier'); ?>">
+                Calendrier
+                <span class="glyphicon glyphicon-calendar pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( '*/[0-9]+') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'my-projects/'.$id); ?>">
+                Visualisation
+                <span class="glyphicon glyphicon-picture pull-right"></span>
+              </a>
+            </li>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'projects-trash'); ?>">
+                Déposer un compte-rendu
+              </a>
+            </li>
+            <h4 style="margin-top:30px;">Synthèse du projet</h4>
+            <hr>
+            <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>">
+              <a href="<?php echo URL::to( 'projects-trash'); ?>">
+                Notation
+              </a>
+            </li>
+          </ul>
+        </div>
+        </div>
+        <div class="col-sm-8"style="margin-left:20px">
+           <p style="font-size:50px;margin-top:20px;">Projet</p>
+           <hr>
+          <?php echo $__env->yieldContent('projet-content'); ?>
+        </div>
+      </div>
+ 
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

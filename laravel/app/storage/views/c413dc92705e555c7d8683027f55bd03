@@ -1,0 +1,15 @@
+<?php $__env->startSection('projet-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('CompteRendu.action',$id))); ?>
+<h2>Comptes rendus</h2>
+<h3>liste :</h3>
+<hr>
+<?php for($i=0;$i < count($list);$i++): ?>
+<hr>
+	<h4><?php echo $list[$i]; ?> <?php echo Form::submit('Consulter ',['class'=>'btn btn-info btn-sm col-sm-2 col-xs-12 pull-right','name'=>'consulter_'.$i]); ?></h4> 
+<hr>
+<?php endfor; ?>
+  
+
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,55 @@
+<?php echo Form::open(array('url'=> URL::route('shadowindicateurs.action',$id))); ?>
+<div id="hidden_indics_enr">
+    <div class="row">
+                  <h2 class="font_for_shadow">Ajouter un Indicateurs : <span class="glyphicon glyphicon-road pull-right"></span></h2>
+                  <hr class="font_for_shadow">
+    </div>
+
+    <div class="panel panel-info" style="margin-top:10px;">
+              <div class="panel-heading" style="font-size:20px"><strong>Indicateurs</strong> </div>
+                <div class="panel-body">
+                   
+                      <div class="table-responsive">  
+                          <table id="stupidTable" class="table table-hover table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_indic_shad" onclick="javascript:refresh_result('tri_nom_indic_shad','page_indic_enr_','ligne_indic_enr',<?php echo ceil(count($TousLesIndicateurs)/15)+1; ?>,<?php echo count($TousLesIndicateurs); ?>,15);" style="width:100%;">Nom</p></th>
+                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_descr_indic_shad" onclick="javascript:refresh_result('tri_descr_indic_shad','page_indic_enr_','ligne_indic_enr',<?php echo ceil(count($TousLesIndicateurs)/15)+1; ?>,<?php echo count($TousLesIndicateurs); ?>,15);" style="width:100%;">Description</p></th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <?php define('jj',0); ?>
+                                <?php foreach($TousLesIndicateurs as $indic): ?>  
+                                 <?php $jj=$jj+1; ?>
+                                    <tr id="indic_<?php echo $jj; ?>" name="ligne_indic_enr" onclick="javascript:hilight_line(<?php echo $jj; ?>,'indic_','checkc_','pop_indic_tr success','pop_indic_tr');" class="pop_indic_tr">
+                                     <td><?php echo $jj; ?> <?php echo Form::checkbox('checkc_'.$jj, 'yes',false,['id'=>'checkc_'.$jj]); ?></td>
+                                      <td><?php echo $indic->nom; ?></td>
+                                      <td><?php echo $indic->declinaison; ?></td>
+                                     
+                                    </tr>
+
+                                <?php endforeach; ?> 
+                              </tbody>
+                          </table>
+                        </div> 
+                             <?php for($p=1; $p < ceil(count($TousLesLieux)/15)+1;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('page_indic_enr_','ligne_indic_enr',<?php echo $p; ?>,<?php echo ceil(count($TousLesIndicateurs)/15)+1; ?>,<?php echo count($TousLesIndicateurs); ?>,15);" id="page_indic_enr_<?php echo $p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+                </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="btn btn-danger" onclick="javascript:hide_hidden_indic()" style="width:100%">Annuler</div>
+        </div>
+
+        <div class="col-md-6">
+            <?php echo Form::submit('Ajout',['class'=>'btn btn-success col-sm-2 col-xs-12','style'=>'width:100%','name'=>'ajout_indic_enregistre']); ?>
+        </div>
+
+       
+</div>
+<script>
+pagine_results('page_indic_enr_','ligne_indic_enr',1,<?php echo ceil(count($TousLesIndicateurs)/15)+1; ?>,<?php echo count($TousLesIndicateurs); ?>,15);
+</script>
+<?php echo Form::close(); ?>

@@ -1,0 +1,24 @@
+<?php $__env->startSection('body'); ?>
+
+    
+     
+      <div class="row">
+         <div class="col-sm-3 col-md-3 sidebar">
+           <div class="jumbotron jumbo2">
+              <ul class="nav nav-pills nav-stacked" style="margin-top:170px">
+                <li class="<?php echo Request::is( 'newproject') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'newproject'); ?>">Nouveau projet<span class="glyphicon glyphicon-tasks pull-right"></span></a></li>
+                <li class="<?php echo Request::is( 'my-projects') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'my-projects'); ?>">Mes projets<span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
+                <li class="<?php echo Request::is( 'projects-trash') ? 'active' : ''; ?>"><a href="<?php echo URL::to( 'projects-trash'); ?>">Corbeille<span class="glyphicon glyphicon-trash pull-right"></span></a></li>
+                <li style="height:300px"></li>
+              </ul>
+          </div>
+        </div>
+        <div class="col-sm-8"style="margin-left:20px">
+           <p style="font-size:50px;margin-top:20px;">Mes projets</p>
+           <hr>
+          <?php echo $__env->yieldContent('mesprojet-content'); ?>
+        </div>
+      </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.basic_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

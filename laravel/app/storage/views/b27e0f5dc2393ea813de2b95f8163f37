@@ -1,0 +1,68 @@
+<?php $__env->startSection('projet-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('categorieactivite.action',$id))); ?>
+<div class="row">
+          <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Activités</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                      <div class="row">
+                        <?php define('i',0); ?>
+                          <?php foreach($cat as $c): ?>
+                          <?php $i=$i+1; ?>
+                              <div class="panel panel-info" style="margin-top:20px" id="panel_<?php echo $i; ?>"name="panelpanel">
+                                <div class="panel-heading" style="font-size:20px"><strong><?php echo $c->nom; ?></strong> <?php echo Form::submit('Editer',['class'=>'btn btn-success col-sm-2 pull-right','name'=>'editer_'.$i]); ?> </div>
+                                  <div class="panel-body">
+                                    
+                                    <h4><strong> Description : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> 
+                                    <?php echo $c->descriptif; ?>
+                                   </h4>
+                                    <h4><strong> Outil : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">1</h4>
+
+                                    <h4><strong> Lieux : </strong><div id="hide_lieu_in_cat_view_<?php echo $i; ?>" class="btn btn-danger" onclick="javascript:toggle_perso(<?php echo $i; ?>);"style="margin-left:15px"><span id="logo_lieux_in_cat_view_<?php echo $i; ?>" class="glyphicon glyphicon-eye-close"></span></div></h4> 
+                                      <div id="lieu_container_<?php echo $i; ?>">
+                                        <div class="table-responsive">  
+                                          <table id="simpleTable" class="table table-hover table-condensed">
+                                              <thead>
+                                                  <tr>
+                                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_nom"   style="width:100%;">Nom</p></th>
+                                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_addr"  style="width:100%;">Adresse</p></th>
+                                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_ville" style="width:100%;">Ville</p></th>
+                                                      <th data-sort="string"><p class="btn btn-default trick" id="tri_cp"  style="width:100%;">Code Postal</p></th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                <?php foreach($lieux_assoc[$i] as $lieu): ?>
+                                                  <tr>
+                                                    <td><?php echo $lieu->nom; ?></td>
+                                                    <td><?php echo $lieu->adresse; ?></td>
+                                                    <td><?php echo $lieu->ville; ?></td>
+                                                    <td><?php echo $lieu->code_postal; ?></td>
+                                                  </tr> 
+                                                <?php endforeach; ?>
+                                              </tbody>
+                                            </table>
+                                       </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            <?php endforeach; ?>
+                      </div>
+                      
+                     <?php for($p=1; $p < count($cat)/2+1;$p=$p+1): ?>
+                              <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('page_','panelpanel',<?php echo $p; ?>,<?php echo ceil(count($cat)/2)+1; ?>,<?php echo count($cat); ?>,2);" id="page_<?php echo $p; ?>"><?php echo $p; ?></p>
+                      <?php endfor; ?>
+                    </div>
+                  </div>
+                </div>
+            </div>
+<?php echo form::close(); ?>
+<script>
+
+pagine_results('page_','panelpanel',1,<?php echo ceil(count($cat))/2+1; ?>,<?php echo count($cat); ?>,2);
+
+for(n=1;n<<?php echo count($cat)+1; ?>;n++){
+  toggle_perso(n);
+}
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

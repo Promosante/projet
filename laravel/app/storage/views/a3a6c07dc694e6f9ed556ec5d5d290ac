@@ -1,0 +1,55 @@
+<?php $__env->startSection('projet-content'); ?>
+
+ <?php if(Session::has('success')): ?>
+                <div class="alert alert-success">
+                    <?php echo Session::get('success'); ?>
+                </div>
+     <?php endif; ?>
+<div class="row">
+      <div class="col-md-8">
+            <h2 style="text-align:justify;text-justify:inter-word;margin-right:20px"><?php echo $projet->titre; ?> </h2>
+      </div>
+
+      <div class="col-md-4">
+          <div class="alert alert-warning pull-right">
+              Vous avez le status de : Créateur        
+            </div>
+      </div>
+</div>
+   
+    <div class="row">
+            <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong><?php echo $projet->acronyme; ?> </strong></div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="panel panel-info" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Informations</strong></div>
+                          <div class="panel-body">
+
+                            <h4><strong> Objectif principal : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $projet->objectif; ?><br><br></h4>
+                            <h4><strong> Objectif spécifique :  </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"><?php echo $projet->objectif_specifique; ?> <br><br></h4>
+                            <h4><strong> Population cible :  </strong></h4><h4 style="margin-left:30px;"> <?php echo $projet->population_cible; ?><br><br></h4>
+                            <h4><strong> Date de début :  </strong></h4><h4 style="margin-left:30px;"> <?php echo $projet->date_debut; ?><br><br></h4>
+                            <h4><strong> Date de fin : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $projet->date_fin; ?><br><br></h4>
+                          </div>
+                        </div>
+                      </div>
+                <div class="row">
+                      <div class="panel panel-info" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Catégorie d'activités disponibles</strong></div>
+                          <div class="panel-body">
+                            <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"><span class="glyphicon glyphicon-chevron-right pull-left"></span> Catégorie_1</h4>
+                            <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;margin-top:20px"><span class="glyphicon glyphicon-chevron-right pull-left"></span> Catégorie_2</h4>
+                            <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;margin-top:20px"><span class="glyphicon glyphicon-chevron-right pull-left"></span> Catégorie_3</h4>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+                 </div>
+               </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
