@@ -38,7 +38,7 @@
 		  	<h4 >Choisir une période :</h4>
 
 		    @for($i=0;$i < count($act)-1 ;$i++)
-		    	{{Form::select('periode_ajout_'.$i,$periodes[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>$act[$i].'P','class'=>'periodes_propose' ])}}
+		    	{{Form::select('periode_ajout_'.$i,$periodes[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>str_replace(' ','_',$act[$i]).'P','class'=>'periodes_propose' ])}}
 		    	
 		  	@endfor
   	</div>
@@ -46,13 +46,13 @@
 		  	<h4 >Choisir un lieu :</h4>
 
 		    @for($i=0;$i < count($act)-1 ;$i++)
-		    	{{Form::select('lieu_ajout',$lieux[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>$act[$i].'L','class'=>'lieux_propose' ])}}
+		    	{{Form::select('lieu_ajout',$lieux[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>str_replace(' ','_',$act[$i]).'L','class'=>'lieux_propose' ])}}
 		  	@endfor
   	</div> 
   	<div class="col-md-4">
 		  	<h4 >Choisir un (ou plusieurs) intervenant(s) :</h4>
 		  	@for($i=0;$i < count($act)-1 ;$i++)
-		    	{{Form::select('interv_ajout',$intervenants[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>$act[$i].'I','class'=>'interv_propose' ])}}
+		    	{{Form::select('interv_ajout',$intervenants[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>str_replace(' ','_',$act[$i]).'I','class'=>'interv_propose' ])}}
 		  	@endfor
 		   
   	</div>

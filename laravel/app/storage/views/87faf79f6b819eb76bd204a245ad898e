@@ -1,0 +1,119 @@
+<?php $__env->startSection('projet-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('association.action',$id))); ?>
+
+<h2>Programmation des évènements<span class="glyphicon glyphicon-time pull-right"></span></h2>
+<hr>
+
+<?php if(Session::has('errors')): ?>
+<br>
+ <div class="alert alert-danger">
+	<?php foreach($errors as $message): ?>
+        <p><?php echo $message; ?></p>
+     <?php endforeach; ?>                 
+  </div>
+ <?php endif; ?>
+<?php if($success): ?>
+    <br>
+    <div class="alert alert-success">
+          <?php foreach($success as $message): ?>
+             <p><?php echo $message; ?></p>
+         <?php endforeach; ?>
+                        
+      </div>
+<?php endif; ?> 
+<div class="row"> 
+	<h3>1)</h3>	
+	<hr>
+  <div class="col-md-4">
+  	<h4>Choisir une activité :</h4>
+    <?php echo Form::select('activite_ajout',$act,count($act)-1,['style'=>'max-width:100%;margin-top:15px;','id'=>'act_sel']); ?>
+  </div>
+</div>
+
+<div class="row">
+  
+  	<hr>
+  	<div class="col-md-4">
+		  	<h4 >Choisir une période :</h4>
+
+		    <?php for($i=0;$i < count($act)-1 ;$i++): ?>
+		    	<?php echo Form::select('periode_ajout_'.$i,$periodes[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>str_replace(' ','_',$act[$i]).'P','class'=>'periodes_propose' ]); ?>
+		    	
+		  	<?php endfor; ?>
+  	</div>
+  	<div class="col-md-4">
+		  	<h4 >Choisir un lieu :</h4>
+
+		    <?php for($i=0;$i < count($act)-1 ;$i++): ?>
+		    	<?php echo Form::select('lieu_ajout',$lieux[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>str_replace(' ','_',$act[$i]).'L','class'=>'lieux_propose' ]); ?>
+		  	<?php endfor; ?>
+  	</div> 
+  	<div class="col-md-4">
+		  	<h4 >Choisir un (ou plusieurs) intervenant(s) :</h4>
+		  	<?php for($i=0;$i < count($act)-1 ;$i++): ?>
+		    	<?php echo Form::select('interv_ajout',$intervenants[ $act[$i] ],0,['style'=>'max-width:100%;margin-top:15px;','id'=>str_replace(' ','_',$act[$i]).'I','class'=>'interv_propose' ]); ?>
+		  	<?php endfor; ?>
+		   
+  	</div>
+</div>
+<div class="row">
+  	<hr>
+    <div class="alert alert-info">
+      Les participants du groupe/sous-groupe non associés à l'activité seront rajoutés automatiquement.
+    </div>
+  	<div class="col-md-4">
+		  	<h4 >Choisir un groupe :</h4>
+		    <?php echo Form::select('groupes', $groupes,0,['style'=>'max-width:100%','id'=>'groupe_affect','class'=>'groupe_propose']); ?>
+  	</div>
+  	<div class="col-md-4">
+		  	<h4 >Choisir un sous-groupe :</h4>
+		  	 <div class="hidden"><?php echo $i=0;; ?></div>
+		       <?php foreach($groupes as $g): ?>
+                    <?php echo Form::select('ss_groupe_affecte_'.$i, $ss_groupe[$i], 0,['style'=>'max-width:100%','class'=>'sous_groupe_propose','id'=>'groupe_'.$i,'name'=>'ss_groupe_affecte_'.$i ] ); ?>
+                  <div class="hidden"><?php echo $i++;; ?></div>
+            <?php endforeach; ?>
+  	</div>
+</div>
+<div class="row">
+
+  	<h3 style="margin-top:25px;">2)</h3>
+  	<hr>
+  	<div class="alert alert-info">
+  		Les dates doivent être incluses dans celles de la période.
+  	</div>
+  	<div class="col-md-6">
+         <h4 >Nom</h4>
+        <?php echo Form::text('nom_de_evene','',['class'=>'form-control']); ?>
+		  	<h4 >Informations pratiques :</h4>
+
+		    <?php echo Form::textarea('infos_pratiques','',['class'=>'form-control']); ?>
+		  	 
+  	</div>
+  	<div class="col-md-6">
+		  	<h4 >Date de début : (JJ/MM/AAAA)</h4>
+		    <?php echo Form::text('date_debut','',['class'=>'form-control']); ?>
+
+        <h4 >Heure de début : (HH:MM)</h4>
+        <?php echo Form::text('heure_debut','',['class'=>'form-control']); ?>
+
+		    <h4 >Date de fin : (JJ/MM/AAAA)</h4>
+		    <?php echo Form::text('date_fin_eve','',['class'=>'form-control']); ?>
+
+        <h4 >Heure de fin : (HH:MM)</h4>
+        <?php echo Form::text('heure_fin','',['class'=>'form-control']); ?>
+
+		  	<?php echo Form::submit('Ajouter',['class'=>'btn btn-success','style'=>'width:100%;margin-top:25px','name'=>'ajout_eve']); ?>
+  	</div>
+  	
+</div>
+
+<?php echo Form::close(); ?>
+
+<?php echo HTML::script('js/gest_evenements.js');; ?>
+
+<script>
+init_evenement();
+</script>
+
+<?php $__env->stopSection(); ?> 
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

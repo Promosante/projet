@@ -1,12 +1,3 @@
-.jumbo2{
-    background: url('test3.png') no-repeat center center;
-    background-size: cover;
-	background-repeat:no-repeat; 
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-}
 
 * {
   .border-radius(0) !important;

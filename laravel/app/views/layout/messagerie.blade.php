@@ -4,7 +4,7 @@
    
       <div class="row">
          <div class="col-sm-3 col-md-3 sidebar">
-          <div class="jumbotron jumbo2">
+          <div class="jumbotron">
           <ul class="nav nav-pills nav-stacked" style="margin-top:170px">
             <li class="{{ Request::is( 'messagerie-newmsg') ? 'active' : '' }}"><a href="{{ URL::to( 'messagerie-newmsg') }}">Nouveau message<span class="glyphicon glyphicon-envelope pull-right"></span></a></li>
             <li class="{{ Request::is( 'messagerie-br') ? 'active' : '' }}"><a href="{{ URL::to( 'messagerie-br') }}">Boite de réception<span class="glyphicon glyphicon-save pull-right"></span></a></li>

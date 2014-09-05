@@ -23,6 +23,7 @@ $(document).ready(function(){
 	 		$(".interv_propose").hide();
 
 	 		var id = $("#act_sel").children("option").filter(":selected").text();
+	 		id=id.replace(/ /g,"_");
 	 		$("#"+id+'P').show();
 	 		$("#"+id+'L').show();
 	 		$("#"+id+'I').show();

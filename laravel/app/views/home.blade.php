@@ -1,7 +1,14 @@
 @extends('layout.basic_layout')
 @section('body')
-<div class="row">    
-  <div class="jumbotron">
+<div class="row"> 
+
+<div>
+  {{ HTML::image('img/Apemac.jpg', 'a_picture', array('style' => 'width:10%;margin-left:17%'))  }}
+  {{ HTML::image('img/universite-de-lorraine.jpg', 'a_picture2', array('style' => 'width:17%')) }}
+  {{ HTML::image('img/CHU-Nancy.jpg', 'a_picture3', array('style' => 'width:7%;margin-right:17%','class'=>'pull-right')) }}
+  {{ HTML::image('img/logo_CEC_petit.jpg', 'a_picture4', array('style' => 'width:7%;margin-right:50px;;margin-top:10px','class'=>'pull-right')) }}
+</div>   
+  <div class="jumbotron" >
             <div class="container">
                  <div class="row">
                     

@@ -55,7 +55,7 @@
         
                         </ul>
                     </li>
-                    <li class="{{ Request::is( 'my-projects*') ? 'active blue-effect' : '' }}"><a href="{{ URL::to( 'my-projects') }}">Mes projets</a></li>
+                    <li class="{{ Request::is( 'my-projects*')  }}"><a href="{{ URL::to( 'my-projects') }}">Mes projets</a></li>
                     <li>
                         <a href="{{ URL::to( 'messagerie-br') }}">
                             Messagerie

@@ -2,10 +2,6 @@
 
 class MessagerieController extends BaseController{
 
-	public function __construct()
-	{
-    	$this->beforeFilter('force.ssl');
-	}
 	
 	public function boite_reception(){
 		$results = DB::table('messages')
@@ -26,13 +22,13 @@ class MessagerieController extends BaseController{
 	public function trash(){
 		$result_temp = DB::table('messages')
 					->where('dest_id','=',Auth::user()->id)
-					->where('dest_id_status','=','trashed')
-					->get();
+					->where('dest_id_status','=','trashed');
+					
 		$results = DB::table('messages')
 					->where('source_id','=',Auth::user()->id)
 					->where('source_id_status','=','trashed')
-					->union($result_temp)
-					->get();
+					->union($result_temp);
+			$results =	$results->get();
 		return View::make('pages.messagerie.messagerie-trash')->with(['messages' => $results,'i'=>0]);
 	}
 

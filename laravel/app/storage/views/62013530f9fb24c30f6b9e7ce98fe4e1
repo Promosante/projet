@@ -1,0 +1,67 @@
+<?php echo Form::open(array('url'=> URL::route('shadowMembresA.action',$id))); ?>
+<div id="hidden_membresa_enr">
+
+ <?php echo $ligneName='ligne_membres_shad';; ?>
+ <?php echo $ligneId='membre_shad_';; ?>
+ <?php echo $NbPerPage=15;; ?>
+ <?php echo $ligneClass='membre_shad_line';; ?>
+ <?php echo $checkNameAndId='check_membre_shad_';; ?>
+ <?php echo $Nb_pages=ceil(count($TousLesMembres)/$NbPerPage)+1;; ?>
+ <?php echo $Nb_El=count($TousLesMembres);; ?>
+ <?php echo $pageId='page_shad_membres';; ?>
+ 
+
+    <div class="row">
+          <h2 class="font_for_shadow">Ajouter des membres : <span class="glyphicon glyphicon-road pull-right"></span></h2>
+          <hr class="font_for_shadow">
+    </div>
+
+     <div class="row"> 
+                      <div class="panel panel-success" style="margin-top:20px">
+                        <div class="panel-heading" style="font-size:20px"><strong>Membres :</strong> </div>
+                          <div class="panel-body">
+                           
+                              <div class="table-responsive">  
+                              <table id="simpleTable" class="table table-hover table-condensed">
+                                  <thead>
+                                      <tr>
+                                          <th></th> 
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_nom_membres_shad" onclick="javascript:refresh_result('tri_nom_membres_shad','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Nom</p></th>
+                                          <th data-sort="string"><p class="btn btn-default trick" id="tri_prenom_membres_shad" onclick="javascript:refresh_result('tri_prenom_membres_shad','<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" style="width:100%;">Prenom</p></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                 <?php $i=0; ?>
+                                 <?php foreach($TousLesMembres as $membre): ?>
+                                 <?php $i=$i+1; ?>
+                                    <tr id="<?php echo $ligneId.$i; ?>" name="<?php echo $ligneName; ?>" onclick="javascript:hilight_line(<?php echo $i; ?>,'<?php echo $ligneId; ?>','<?php echo $checkNameAndId; ?>','success <?php echo $ligneClass; ?>','<?php echo $ligneClass; ?>')" class="<?php echo $ligneClass; ?>">
+                                      <td><?php echo $i; ?> <?php echo Form::checkbox($checkNameAndId.$i, 'yes',false,['id'=>$checkNameAndId.$i]); ?></td>
+                                      <td><?php echo $membre->nom; ?></td>
+                                      <td><?php echo $membre->prenom; ?></td>
+                                    </tr>
+                                  <?php endforeach; ?>
+                                  </tbody>
+                              </table>
+                            </div>
+                          <?php for($p=1; $p < $Nb_pages;$p=$p+1): ?>
+                                <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',<?php echo $p; ?>,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);" id="<?php echo $pageId.$p; ?>"><?php echo $p; ?></p>
+                             <?php endfor; ?>
+
+                          </div>
+                      </div>
+                </div>
+
+        <div class="col-md-6">
+            <div class="btn btn-danger" onclick="javascript:hide_hidden_membres_enr();" style="width:100%">Annuler</div>
+        </div>
+
+        <div class="col-md-6">
+            <?php echo Form::submit('Ajout',['class'=>'btn btn-success col-sm-2 col-xs-12','style'=>'width:100%','name'=>'ajout_membres_enregistres']); ?>
+        </div>
+
+       
+</div>
+<script>
+pagine_results('<?php echo $pageId; ?>','<?php echo $ligneName; ?>',1,<?php echo $Nb_pages; ?>,<?php echo $Nb_El; ?>,<?php echo $NbPerPage; ?>);
+</script>
+<?php echo Form::close(); ?>

@@ -1,0 +1,46 @@
+<?php $__env->startSection('projet-content'); ?>
+<?php echo Form::open(array('url'=> URL::route('activite.action',$id))); ?>
+<h2>Mes activités<span class="glyphicon glyphicon-th pull-right"></span></h2>
+
+  <div class="row">
+            <div class="panel panel-success" style="margin-top:20px">
+              <div class="panel-heading" style="font-size:20px"><strong>Activités</strong> </div>
+                <div class="panel-body">
+                  <div class="col-md-12">
+
+                    <div class="hidden"><?php echo $i=0;; ?></div>
+                    <?php foreach($activites as $act): ?>
+                    <div class="hidden"><?php echo $i++; ?></div>
+                    <div class="row">
+
+                            <div class="panel panel-info" style="margin-top:20px" name="panelpanel">
+                              <div class="panel-heading" style="font-size:20px"><strong><?php echo $act->nom; ?></strong> <?php echo Form::submit('Editer',['class'=>'btn btn-success col-sm-2 pull-right','name'=>'editer_'.$i]); ?>  </div>
+                                <div class="panel-body">
+                                  
+                                  <h4><strong> Objectif : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> 
+                                      <?php echo $act->objectif; ?>
+                                  </h4>
+                                  <h4><strong> Date de début : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"><?php echo $act->date_debut; ?></h4>
+                                  <h4><strong> Date de fin : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"><?php echo $act->date_fin; ?></h4>
+                                  <h4><strong> Indicateur : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">Indicateur</h4>
+                                  <h4><strong> Outil : </strong></h4><h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;">1</h4>
+                                </div>
+                              </div>
+                    </div>
+                    <?php endforeach; ?>
+                   
+                     <?php for($p=1; $p < count($activites)/2+1;$p=$p+1): ?>
+                              <p class="btn btn-default btn-sm" onclick="javascript:pagine_results('page_','panelpanel',<?php echo $p; ?>,<?php echo ceil(count($activites)/2)+1; ?>,<?php echo count($activites); ?>,2);" id="page_<?php echo $p; ?>"><?php echo $p; ?></p>
+                      <?php endfor; ?>
+
+                </div>
+            </div>
+        </div>
+     </div>
+
+<script>
+    pagine_results('page_','panelpanel',1,<?php echo ceil(count($activites))/2+1; ?>,<?php echo count($activites); ?>,2);
+</script>
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

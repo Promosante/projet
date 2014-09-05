@@ -1,0 +1,239 @@
+<?php $__env->startSection('projet-content'); ?>
+
+  <?php echo Form::open(array('url'=> URL::route('calendrier.action',$id))); ?>
+    <h2>Déroulement du projet<span class="glyphicon glyphicon-calendar pull-right"></span></h2>
+
+    <?php if($success): ?>
+                <div class="alert alert-success">
+                    <?php echo $success; ?>
+                </div>
+    <?php endif; ?>  
+
+    <?php if(Session::has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach(Session::get('errors')->all() as $message): ?>
+                        <p><?php echo $message; ?></p>
+                    <?php endforeach; ?>
+                    
+                </div>
+     <?php endif; ?> 
+     <div class="row" style="margin-top:35px">
+            <h3>Nous sommes le <?php echo $jour_actuel; ?> <?php echo $jour_nb_actuel; ?> <?php echo $mois_actuel; ?>, jour n° <?php echo $jour_nb_annee_actuel; ?>/365, semaine <?php echo $semaine_actuel; ?>.</h3>
+     </div>
+  <div class="row">
+      <div class="col-md-4">
+                <?php echo Form::submit('Année précédente',['class'=> 'btn btn-success' ,'name'=>'annee_moins','style'=>'margin-top:20px;width:100%;']); ?>
+      </div>
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-4">
+                <?php echo Form::submit('Année suivante',['class'=> 'btn btn-success' ,'name'=>'annee_plus','style'=>'margin-top:20px;width:100%;']); ?>
+      </div>
+  </div>
+<input class="" type="hidden" value="<?php echo $annee_sel; ?>" name="annee_sel"></input>
+ <div class="row">
+    <div class="row" style="margin-top:15px">
+            <div class="col-md-2">
+                <?php echo Form::submit('Janvier',['class'=> ($mois_sel=='Janvier' ) ? 'btn btn-danger' : 'btn btn-primary' ,'name'=>'janvier','style'=>'margin-top:20px;width:100%;']); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo Form::submit('Fevrier',['class'=>($mois_sel=='Fevrier' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'fevrier','style'=>'margin-top:20px;width:100%;']); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo Form::submit('Mars',['class'=>($mois_sel=='Mars' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'mars','style'=>'margin-top:20px;width:100%;']); ?>
+            </div>
+            <div class="col-md-2">
+                <?php echo Form::submit('Avril',['class'=>($mois_sel=='Avril' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'avril','style'=>'margin-top:20px;width:100%;']); ?>
+            </div>
+            <div class="col-md-2">
+              <?php echo Form::submit('Mai',['class'=>($mois_sel=='Mai' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'mai','style'=>'margin-top:20px;width:100%;']); ?>
+            </div>
+            <div class="col-md-2">
+               <?php echo Form::submit('Juin',['class'=>($mois_sel=='Juin' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'juin','style'=>'margin-top:20px;width:100%;']); ?>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+               <?php echo Form::submit('Juillet',['class'=>($mois_sel=='Juillet' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'juillet','style'=>'margin-top:20px;width:100%;']); ?>
+            </div>
+            <div class="col-md-2">
+            <?php echo Form::submit('Aout',['class'=>($mois_sel=='Aout' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'aout','style'=>'margin-top:20px;width:100%;']); ?>
+           </div>
+            <div class="col-md-2">
+             <?php echo Form::submit('Septembre',['class'=>($mois_sel=='Septembre' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'septembre','style'=>'margin-top:20px;width:100%;']); ?>
+           </div>
+            <div class="col-md-2">
+              <?php echo Form::submit('Octobre',['class'=>($mois_sel=='Octobre' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'octobre','style'=>'margin-top:20px;width:100%;']); ?>
+          </div>
+            <div class="col-md-2">
+              <?php echo Form::submit('Novembre',['class'=>($mois_sel=='Novembre' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'novembre','style'=>'margin-top:20px;width:100%;']); ?>
+          </div>
+            <div class="col-md-2">
+            <?php echo Form::submit('Décembre',['class'=>($mois_sel=='Decembre' ) ? 'btn btn-danger' : 'btn btn-primary','name'=>'decembre','style'=>'margin-top:20px;width:100%;']); ?>
+        </div>
+    </div>
+    <h3 style="margin-top:35px;text-align:center;">
+      Période du 01 au <?php echo (new DateTime(GestionDate::get_Nb_Mois($mois_sel).'/20/'.$annee_sel))->format('t');; ?> <?php echo $mois_sel; ?> <?php echo $annee_sel; ?>. 
+     
+    </h3>
+    <div class="row" style="margin-top:30px">
+        <div class="hidden">
+            <?php echo $i=0;$j=0;; ?>
+        </div>
+
+        
+        <?php foreach($activites as $act): ?>
+
+            <div class="row" style="height:50px" >
+                <div class="col-md-2">
+                    <h4>Activité <?php echo $i+1; ?></h4>
+                </div>
+               
+                <div class="col-md-10">
+
+                   <div class="progress barres_dessous" style="margin-top:10px">
+
+                       
+                        <div class="progress-bar progress-bar-success barres1 " name="barre" role="progressbar"
+                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" id="bar_<?php echo $i; ?>"
+                            style="width:<?php echo $segments[$i][1]; ?>%;background-image:none;margin-left:<?php echo $segments[$i][0]; ?>%;"
+                            onclick="javascript:show_details('d_<?php echo $i+1; ?>','bar_<?php echo $i; ?>');">
+
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden">
+                <?php echo $i++;; ?>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+
+ </div>
+<div class="row">
+  <?php $i=0; ?>
+  <?php $j=0; ?>
+        <?php foreach($activites as $r): ?>
+          <?php $i=$i+1; ?>
+            <div class="row details" id="d_<?php echo $i; ?>">
+              <div class="panel panel-success" style="margin-top:10px">
+                <div class="panel-heading" style="font-size:20px"><strong>Détails</strong> <div class="btn btn-danger pull-right" onclick="javascript:hide_details();"><span class="glyphicon glyphicon-remove"></span></div></div>
+                  <div class="panel-body">
+                    <h3>Activité</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-3">
+                             <h4> <strong> Nom : </strong></h4>
+                             <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $r->nom; ?></h4>
+                        </div>
+                         <div class="col-md-3">
+                             <h4> <strong> Date de début : </strong></h4>
+                             <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $r->date_debut; ?></h4>
+                        </div>
+                         <div class="col-md-3">
+                             <h4> <strong> Date de fin : </strong></h4>
+                             <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $r->date_fin; ?></h4>
+                        </div>
+                        <div class="col-md-3">
+                             <h4> <strong> Nombre de périodes: </strong></h4>
+                             <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo count($periodes_associees[$i-1]); ?></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                                <?php foreach($periodes_associees[$i-1] as $p): ?>
+                                  <?php $j=$j+1; ?>
+                                  <h4>période <?php echo $j; ?></h4>
+                                  <div class="progress barres_dessous" style="margin-top:10px">
+                                       <div class="progress-bar progress-bar-success barres1 " name="barre" role="progressbar"
+                                          aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" id="bar_<?php echo $i; ?>_<?php echo $j; ?>"
+                                          style="width:<?php echo $segments2[$i-1][$j-1][1]; ?>%;background-image:none;margin-left:<?php echo $segments2[$i-1][$j-1][0]; ?>%;"
+                                          onclick="javascript:show_periode_details('d_<?php echo $i; ?>_<?php echo $j; ?>','bar_<?php echo $i; ?>_<?php echo $j; ?>','bar_<?php echo $i-1; ?>');">
+                                      </div>
+                                       
+                                  </div>
+                                <?php endforeach; ?>
+                              <div class="hidden"> <?php echo $j=0;; ?></div>
+                            
+                        </div>
+                    </div>
+
+                  </div>
+              </div>
+            </div>
+    <?php endforeach; ?>
+</div>
+<div class="row">
+  <?php $i=0; ?>
+   <?php $j=0; ?>
+        <?php foreach($activites as $r): ?>
+          <?php $i=$i+1; ?>
+           <?php foreach($periodes_associees[$i-1] as $p): ?>
+            <?php $j=$j+1; ?>
+            <div class="row details_periodes" id="d_<?php echo $i; ?>_<?php echo $j; ?>">
+              <div class="panel panel-success" style="margin-top:10px">
+                <div class="panel-heading" style="font-size:20px"><strong>Détails</strong> <div class="btn btn-danger pull-right" onclick="javascript:hide_periode_details('bar_<?php echo $i-1; ?>');"><span class="glyphicon glyphicon-remove"></span></div></div>
+                  <div class="panel-body">
+                    <h3>Periode</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-3">
+                             <h4> <strong> Nom : </strong></h4>
+                             <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $p->nom; ?></h4>
+                        </div>
+                         <div class="col-md-3">
+                             <h4> <strong> Date de début : </strong></h4>
+                             <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $p->date_debut; ?></h4>
+                        </div>
+                         <div class="col-md-3">
+                             <h4> <strong> Date de fin : </strong></h4>
+                             <h4 style="text-align:justify;text-justify:inter-word;margin-left:30px;"> <?php echo $p->date_fin; ?></h4>
+                        </div>
+                    </div>
+                        <hr>
+                        <hr>
+                        <?php foreach($segments3[$i-1][$j-1] as $e): ?>
+                        <?php $k=$k+1; ?>
+
+                        Evenement <?php echo $k; ?>, du <?php echo $evenements_associes[$i-1][$j-1][$k-1]->date_debut; ?> au <?php echo $evenements_associes[$i-1][$j-1][$k-1]->date_fin; ?>, au <?php echo $evenements_associes[$i-1][$j-1][$k-1]->nom; ?>, <?php echo $evenements_associes[$i-1][$j-1][$k-1]->adresse; ?>
+                        <div class="progress barres_dessous" style="margin-top:10px">
+                            <div class="progress-bar progress-bar-success barres3 " name="barre" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" id=""
+                                style="width:<?php echo $segments3[$i-1][$j-1][$k-1][0]; ?>%;background-image:none;" >
+                            </div>
+                            <div class="progress-bar progress-bar-danger barres3 " name="barre" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" id=""
+                                style="width:<?php echo $segments3[$i-1][$j-1][$k-1][1]; ?>%;background-image:none;" >
+                            </div>
+                            <div class="progress-bar progress-bar-success barres3 " name="barre" role="progressbar"
+                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" id=""
+                                style="width:<?php echo $segments3[$i-1][$j-1][$k-1][2]; ?>%;background-image:none;" >
+                            </div>
+                        </div>
+
+                        <?php endforeach; ?>
+                        <?php $k=0; ?>
+                    
+                  </div>
+              </div>
+            </div>
+            <?php endforeach; ?>
+           <div class="hidden"> <?php echo $j=0;; ?></div>
+    <?php endforeach; ?>
+  <div class="hidden">  <?php echo $i=0;; ?></div>
+</div>
+
+<?php echo HTML::script('js/calendrier.js');; ?>
+<script>
+$(".details_periodes").hide();
+$(".details").hide();
+</script>
+<?php echo Form::close(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.projet_layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
